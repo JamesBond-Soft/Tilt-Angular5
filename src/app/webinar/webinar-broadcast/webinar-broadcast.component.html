@@ -1,0 +1,99 @@
+<div class="row" style="padding-bottom: 10px">
+  <div class="col-md-6">
+    <h2>Webinar Broadcast</h2>
+  </div>
+  <div class="col-md-6">
+    <h5 class="pull-right">Webinar: {{webinarTodo?.name}}</h5><br>
+    <span *ngIf="currentWebinarStatus === 1" class="label label-danger pull-right">Live Now</span>
+    <span *ngIf="currentWebinarStatus !== 1" class="label label-default pull-right">Not Broadcasting</span>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="live-view">
+            <video id="localVideo" style="width:100%" #videoElement autoplay muted></video>
+        </div>
+      </div>
+    </div>
+
+   <!--  <div class="row">
+        <button (click)="start()" class="btn btn-primary">Play</button>
+        <button (click)="toggleControls()" class="btn btn-success">Toggle Controls</button>
+        <button (click)="pause()" class="btn btn-warning">Pause</button>
+        <button (click)="resume()" class="btn btn-info">Resume</button>
+        <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
+    </div> -->
+
+    <div class="row padding-10">
+      <div class="col-md-3">
+        <div class="btn-group pull-left">
+          <button type="button" class="btn" [ngClass]="{ 'btn-success' : deviceType === 0, 'btn-info' : deviceType === 1}" (click)="SelectDeviceType(0)">Webcam</button>
+          <button type="button" class="btn" [ngClass]="{ 'btn-success' : deviceType === 1, 'btn-info' : deviceType === 0}" (click)="SelectDeviceType(1)">Screenshare</button>
+        </div>
+        <span class="label label-success" id="broadcastingInfo" style="font-size:14px;display:none" style="display: none">Publishing</span>
+      </div>
+      <div class="col-md-6 ">
+        <div class="text-center">
+        <button type="button" id="start_publish_button" class="btn btn-info btn-broadcast" *ngIf="currentWebinarStatus != 1 " (click)="start()"><i class="fa fa-play-circle"></i></button>
+        <button type="button" id="stop_publish_button" class="btn btn-danger btn-broadcast" *ngIf="currentWebinarStatus == 1" (click)="pause()"><i class="fa fa-stop-circle"></i></button>
+          <br>display one or other, black to begin with, red to stop video feed during broadcast
+
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-danger pull-right" (click)="confirmFinish()">Finish Webinar</button>
+      </div>
+    </div>
+<hr>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Current online Users - <span class="label label-success">{{attendUserList?.length}}</span> </h5>
+        <div class="card">
+          <div class="card-block">
+            <div class="card-body">
+              <div class="row ">
+                <div class="col-md-12">
+
+                  <table class="table table-hover table-condensed" id="condensedTable">
+                    <thead>
+                    <tr>
+                      <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of attendUserList">
+                        <td class="v-align-middle semi-bold">{{item.firstName}} {{item.lastName}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h5>Agenda</h5>
+
+        <div class="card">
+          <div class="card-block">
+            <div class="card-body">
+              <div class="row ">
+                <div class="col-md-12">
+                  <p>{{webinarTodo?.agenda}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

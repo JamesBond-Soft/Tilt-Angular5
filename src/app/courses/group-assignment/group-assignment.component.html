@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>{{pageTitle}}</h2>
+  </div>
+  <div class="col-md-6">
+    <!--CONTROL SECTION -->
+    <div class="float-right">
+
+    </div>
+  </div>
+</div>
+
+<div class="row" [formGroup]="courseGroupForm">
+  <div class="col-12">
+    <div class="card padding-20">
+      <div class="card-block">
+
+        <div class="row">
+          <div class="col-6">
+            <h5>Repeat Frequency</h5>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.repeatInterval}">
+              <label class="col-md-6 control-label" for="repeatInterval">Number</label>
+              <div class="col-md-6">
+                <input class="form-control" id="repeatInterval" type="number" placeholder="Number" formControlName="repeatInterval" />
+                <span class="help-block" *ngIf="displayMessage.repeatInterval">{{displayMessage.repeatNumber}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.repeatUnit}">
+              <label class="control-label" for="repeatUnit">Unit *</label>
+              <select id="cboOrganisation" class="form-control" name="repeatUnit" formControlName="repeatUnit">
+                <option value="never">Never repeat</option>
+                <option value="days">Days</option>
+                <option value="weeks">Weeks</option>
+                <option value="months">Months</option>
+                <option value="years">Years</option>
+              </select>
+              <span class="help-block" *ngIf="displayMessage.repeatUnit">{{displayMessage.repeatUnit}}</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <h5>Dates</h5>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.startDate}">
+              <label class="col-md-6 control-label" for="startDate">Start Date *</label>
+              <div class="col-md-6">
+                <input class="form-control" id="startDate" type="text" placeholder="State Date" formControlName="startDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                <span class="help-block" *ngIf="displayMessage.startDate">{{displayMessage.startDate}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.endDate}">
+              <label class="col-md-6 control-label" for="endDate">End Date</label>
+              <div class="col-md-6">
+                <input class="form-control" id="endDate" type="text" placeholder="Due Date" formControlName="endDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                <span class="help-block" *ngIf="displayMessage.endDate">{{displayMessage.endDate}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.dueDate}">
+              <label class="col-md-6 control-label" for="dueDate">Due Date *</label>
+              <div class="col-md-6">
+                <input class="form-control" id="dueDate" type="text" placeholder="Due Date" formControlName="dueDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                <span class="help-block" *ngIf="displayMessage.dueDate">{{displayMessage.dueDate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <h5>Misc</h5>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.subGroupsCanInherit}">
+              <label class="col-md-6 control-label" for="subGroupsCanInherit">Sub Groups Can Inherit Courses</label>
+              <div class="col-md-6">
+                <select class="form-control" id="subGroupsCanInherit" formControlName="subGroupsCanInherit">
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.subGroupsCanInherit">{{displayMessage.subGroupsCanInherit}}</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <basket-selector #groupBasketSelector shelfTitle="Available Groups" basketTitle="Selected Groups" dataBranchField="subGroups" displayField="name" (isDirty)="basketSelectorIsDirtyEventHandler($event)"></basket-selector>
+    </div>
+  </div>
+    
+  <div class="row">
+    <div class="col-6">
+        <button type="button" class="btn   btn-default" (click)="cmdBack()">Back</button>
+    </div>
+    <div class="col-6">
+      <div class="pull-right">
+        <button type="button" class="btn   btn-danger" [hidden]="!courseGroupAssignmentList?.length" (click)="cmdDeleteCourseGroupAssignments()">Delete</button>
+        <button type="button" class="btn   btn-primary" [disabled]="!courseGroupForm.valid || !this.groupBasketSelector.basketItems?.length"
+          (click)="cmdSaveCourseGroupAssignments()">{{this.courseGroupAssignment?.courseGroupAssignmentId === 0 ? 'Assign Groups' : 'Save Changes'}}</button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />

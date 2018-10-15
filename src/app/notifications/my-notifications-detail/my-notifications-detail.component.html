@@ -1,0 +1,54 @@
+<div class="card" *ngIf="notification">
+    <div class="card-body">
+      <h4 class="card-title">{{pageTitle}}</h4>
+      <div class="form-group-attached">
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <div class="form-group form-group-default">
+              <label class="control-label">Notification Type</label>
+              <span class="form-control-plaintext">{{notification.notificationType | genericStatusNamePipe : 'INotificationType'}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <div class="form-group form-group-default">
+              <label class="control-label">Subject</label>
+              <span class="form-control-plaintext">{{notification.subject}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <div class="form-group form-group-default">
+              <label class="control-label">Body</label>
+              <span class="form-control-plaintext">{{notification.body}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <div class="form-group form-group-default">
+              <label class="control-label">Priority</label>
+              <span class="form-control-plaintext">{{ notification.priority | genericStatusNamePipe : 'Priority' }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <div class="row">
+                  <div class="col-8">
+                      <label class="control-label">Received Date</label>
+                      <span class="form-control-plaintext">{{notification.sentDate | date : 'dd-MMM-yyy
+                          h:mm:ss aaa'}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn   btn-default" (click)="cmdBack()">Back</button>

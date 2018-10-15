@@ -1,0 +1,9 @@
+@import 'core.scss';
+
+//Sidebar Styles
+@import '~assets/tilt_ui/scss/modules/_header.scss';
+
+.dropdown-menu.notification-toggle {
+    left: auto!important;
+    right: 0px !important;
+}

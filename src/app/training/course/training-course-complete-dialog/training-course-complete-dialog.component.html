@@ -1,0 +1,8 @@
+<ng-template #courseCompleteDialogTemplate>
+    <div class="modal-body text-center">
+      <h4 class="module-complete font-weight-bold"><i class="fa fa-check-circle font-weight-normal"></i> {{currentCourseName}} Completed</h4>
+      <h4>Congratulations! - You have finished the course</h4>
+      <button type="button" class="btn btn-primary" (click)="cmdReturnToMyCourses()" *ngIf="!courseReadOnly">Return to My Courses</button>
+      <button type="button" class="btn btn-primary" (click)="cmdReturnToTrainingHistory()" *ngIf="courseReadOnly">Return to Training History</button>
+    </div>
+  </ng-template>

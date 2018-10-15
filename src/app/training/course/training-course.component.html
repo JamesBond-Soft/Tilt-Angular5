@@ -1,0 +1,54 @@
+
+
+<div class="row">
+  <div class="col">
+    <h1>Course: {{course?.name}}</h1>
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-inverse pull-right" (click)="cmdBackToMyCourses()">Exit Course</button>
+  </div>
+</div>
+
+<training-progress-indicator [moduleId]="moduleId" [courseId]="courseId" [moduleProgress]="moduleProgress"></training-progress-indicator>
+
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="showFatalError">
+      <div class="alert alert-danger">There was an unexpected error. Could not load Course. Please click the button below return to the dashboard and try
+        again.</div>
+      <div class="btn btn-primary" [routerLink]="['/dashboard']">Return to Dashboard</div>
+    </div>
+    <div *ngIf="course && !showFatalError">
+      <div class="row">
+        <div class="col" *ngIf="page?.coursePageContent?.templateType === 0">
+            <training-content [page]="page"></training-content>
+        </div>
+        <div class="col" *ngIf="page?.coursePageContent?.templateType === 1">
+            <training-question #trainingQuestionComponent [page]="page" [course]="course" [module]="module"></training-question>
+        </div>
+        <div class="col" *ngIf="page?.coursePageContent?.templateType === 3">
+            <training-dynamic-content #trainingDynamicContentComponent [page]="page"></training-dynamic-content>
+        </div>
+      </div>
+    </div> 
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary pull-right" (click)="cmdPrevious()">Previous</button>
+      </div>
+      <div class="col">
+        <div class="progress progress-small m-b-0">
+          <div class="progress-bar progress-bar-primary" [style.width.%]="courseProgress"></div>
+        </div>
+        <div class="text-center">{{module?.name}}</div>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-primary pull-left" (click)="cmdNext()">Next</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<training-next-module-dialog #trainingNextModuleDialog (onConfirm)="nextModuleOnConfirmHandler($event)"></training-next-module-dialog>
+<training-course-complete-dialog #trainingCourseCompleteDialog></training-course-complete-dialog>

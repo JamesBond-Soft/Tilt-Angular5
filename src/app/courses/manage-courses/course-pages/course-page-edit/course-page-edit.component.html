@@ -1,0 +1,20 @@
+<div class="col-12">
+    <div class="row">
+        <div class="col-9">
+            <h4>Page Details
+                <button type="button" class="btn btn-default  " (click)="cmdHidePageDetails()">Hide</button>
+            </h4>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn   btn-primary btn-sm pull-right" (click)="cmdOpenTemplate($event)">Template</button>
+            <button type="button" class="btn   btn-primary btn-sm pull-right" (click)="cmdPreview($event)">Preview</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <course-page-content-block-list *ngIf="page.coursePageContent?.templateType === 0" [page]="page"></course-page-content-block-list>
+            <course-page-content-question-list #coursePageContentQuestionList *ngIf="page.coursePageContent?.templateType === 1" [page]="page"></course-page-content-question-list>
+            <contentcreator #contentCreatorComponent *ngIf="page.coursePageContent?.templateType === 3" [page]="page" (onFinishEditEvent)="contentCreatorOnFinishEditEventHandler($event)"></contentcreator>
+        </div>
+    </div>
+</div>

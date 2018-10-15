@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="page-title">{{ pageTitle }}</h2>
+  </div>
+  <div class="col-md-6">
+
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed" id="condensedTable">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Employee Ref No</th>
+            <th>Date Lodged</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sar of selfAssessments | filterSelfAssessmentReport : searchString; let odd=odd; let even=even;" [ngClass]="{'alternateRow': odd}" (click)="cmdOpenSelfAssessment(sar)">
+            <td class="v-align-middle">{{ sar.userProfile.firstName }}</td>
+            <td class="v-align-middle semi-bold">{{ sar.userProfile.lastName }}</td>
+            <td class="v-align-middle semi-bold">{{ sar.userProfile.dob }}</td>
+            <td class="v-align-middle semi-bold">{{ sar.userProfile.hrStaffReferenceID }}</td>
+            <td class="v-align-middle semi-bold">{{ sar.createdDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

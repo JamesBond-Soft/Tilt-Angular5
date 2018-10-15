@@ -1,0 +1,10 @@
+@import 'core.scss';
+
+//Sidebar Styles
+@import '~assets/tilt_ui/scss/modules/_tabs_accordian.scss';
+
+.nav-tabs .nav-link.active{
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}

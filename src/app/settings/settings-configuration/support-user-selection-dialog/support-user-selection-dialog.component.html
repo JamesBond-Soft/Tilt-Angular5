@@ -1,0 +1,29 @@
+<ng-template #supportUserSelectionDialogTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{pageTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cmdClose()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of eligibleSupportUsers">
+            <td [ngClass]="{'bg-primary text-light font-weight-bold':user.userId === selectedUser?.userId}">{{user.firstName}}</td>
+            <td [ngClass]="{'bg-primary text-light font-weight-bold':user.userId === selectedUser?.userId}">{{user.lastName}}</td>
+            <td [ngClass]="{'bg-primary text-light font-weight-bold':user.userId === selectedUser?.userId}">{{user.email}}</td>
+            <td [ngClass]="{'bg-primary text-light font-weight-bold':user.userId === selectedUser?.userId}"><button type="button" class="btn btn-primary  " [ngClass]="user.userId === selectedUser?.userId ? 'btn-default' : 'btn-primary'" (click)="cmdSelectUser(user)">Select</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      <button type="button" class="btn btn-primary pull-right" (click)="cmdClose()" >Close</button>
+  </div>
+</ng-template>

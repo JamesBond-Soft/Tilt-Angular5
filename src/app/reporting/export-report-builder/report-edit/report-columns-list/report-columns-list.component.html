@@ -1,0 +1,42 @@
+<div class="card padding-20">
+    <div class="card-body">
+      <div class="table-responsive">
+        <div *ngIf="!exportReport?.exportReportColumns || !exportReport.exportReportColumns?.length">
+          <h4 class="text-center">Add a column to get started.</h4>
+          <br/>
+          <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddReportColumn()" [hidden]="selectedExportReportColumn || editColumnOrder">Add Column</button>
+        </div>
+        <div *ngIf="exportReport?.exportReportColumns && exportReport.exportReportColumns?.length">
+          <div class="float-right">
+            <button type="button" class="btn   btn-secondary" (click)="cmdStartEditOrder()" [hidden]="editColumnOrder || selectedExportReportColumn">Edit Column Order</button>
+            <button type="button" class="btn   btn-primary" (click)="cmdFinishEditOrder()" [hidden]="!editColumnOrder">Done</button>
+          </div>
+          <table class="table table-hover table-condensed" id="condensedTable">
+            <tbody>
+              <tr *ngFor="let column of exportReport.exportReportColumns; let i = index" (click)="cmdSelectItem(column)">
+                <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':column === selectedExportReportColumn}">{{column.name}}
+                  <i class="fa fa-arrow-right" *ngIf="column === selectedExportReportColumn"></i>
+                </td>
+                <td width="20%" [ngClass]="{'bg-primary text-light font-weight-bold':column === selectedExportReportColumn}">
+                  <div class="btn-toolbar m-t-10" role="toolbar">
+                    <div class="btn-group btn-group-xs" *ngIf="editColumnOrder">
+                      <button type="button" class="btn btn-default" [disabled]="i === (exportReport.exportReportColumns.length -1)" (click)="cmdMoveOrderDown(column, $event)">
+                        <i class="fa fa-arrow-down"></i>
+                      </button>
+                      <button type="button" class="btn btn-default" [disabled]="i === 0" (click)="cmdMoveOrderUp(column, $event)">
+                        <i class="fa fa-arrow-up"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br/>
+          <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddReportColumn()" [hidden]="selectedExportReportColumn || editColumnOrder">Add Column</button>
+          <br>
+        </div>
+
+      </div>
+    </div>
+  </div>

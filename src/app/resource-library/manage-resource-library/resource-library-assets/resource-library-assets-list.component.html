@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="page-title">{{ pageTitle }}</h2>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-primary m-b-10 pull-right" (click)="cmdAddResource()" *ngIf="resourceLibraryAssets?.length"><span class="fa fa-plus"></span> Add Resource</button>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+          <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Groups Assigned</th>
+          <th class="">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let resourceLibraryAsset of resourceLibraryAssets | filterResourceLibraryAssetsPipe : searchString">
+          <td>{{resourceLibraryAsset.name | truncate : 50}}</td>
+          <td>{{IResourceLibraryAssetType[resourceLibraryAsset.assetType]}}</td>
+          <td>{{resourceLibraryAsset.resourceCategory ? resourceLibraryAsset.resourceCategory.name : 'None'}}</td>
+          <td>{{resourceLibraryAsset.description | truncate}}</td>
+          <td>{{IResourceLibraryAssetStatus[resourceLibraryAsset.assetStatus]}}</td>
+          <td><span class="badge badge-primary">{{resourceLibraryAsset.resourceGroupAssignments?.length}}</span></td>
+          <td class=""><a *ngIf="resourceLibraryAsset.assetStatus === IResourceLibraryAssetStatus.Available && resourceLibraryAsset.fileProperties && resourceLibraryAsset.fileProperties.url" [href]="resourceLibraryAsset.fileProperties?.url" target="_blank" class="btn   btn-default mr-2">View</a><button type="button" class="btn btn-primary pull-right" (click)="cmdEditResource(resourceLibraryAsset)">Edit</button></td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!resourceLibraryAssets?.length">
+        <h4 class="text-center">Add a Resource to get started.</h4>
+        <br/>
+        <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddResource()">Add Resource</button>
+      </div>
+    </div>
+  </div>
+</div>

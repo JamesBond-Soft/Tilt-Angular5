@@ -1,0 +1,91 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">{{pageTitle}}</h4>
+    <div class="form-group-attached" [formGroup]="settingsForm">
+      <h5>Support</h5>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="ticketType">Tickets can be escalated to Top Level Support User</label>
+            <div class="form-control-plaintext">
+              <select class="form-control" formControlName="supportTicketEscalationEnabled">
+                <option [value]="true">Yes</option>
+                <option [value]="false">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="ticketType">Top Level Support User</label>
+            <div class="form-control-plaintext">{{settingsForm.get('supportSysAdminUserId').value ? settingsForm.get('supportSysAdminUserDisplayName').value
+              : 'None'}}
+              <span class="badge badge-primary" (click)="cmdSelectSupportUser()">Change</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5>Organisation Settings</h5>
+      <div class="row" *ngFor="let confOrgSettings of configurationSettings?.configurationOrganisationSettingsList">
+        <div class="col-6">
+          <div class="form-group form-group-default">
+            <label class="control-label">Organisation</label>
+            <div class="form-control-plaintext">{{confOrgSettings.organisationId | organisationNamePipe:organisations}}</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.supportAdminUserId}">
+                <label class="control-label" for="ticketType">Default Support User *</label>
+                <div class="form-control-plaintext">{{confOrgSettings.supportAdminUserId ? confOrgSettings.supportAdminUserDisplayName : 'None'}}
+                  <span class="badge badge-primary" (click)="cmdSelectAdminSupportUser(confOrgSettings)">Change</span>
+                  <input type="text" name="supportAdminUserId" hidden>
+                </div>
+                <span class="help-block" *ngIf="displayMessage.supportAdminUserId">{{displayMessage.supportAdminUserId}}</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.WeeklyAdminReportStartDate}">
+                <div class="row">
+                  <div class="col-8">
+                    <label class="control-label" for="WeeklyAdminReportStartDate">Weekly Self-Assessment Report Start Date</label>
+                    <div class="form-control-plaintext">
+                      <input type="text" class="form-control" placeholder="Weekly Self-Assessment Report Start Date"
+                        bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [(ngModel)]="confOrgSettings.weeklyAdminReportStartDate" [ngModelOptions]="{standalone: true}" (ngModelChange)="formControlValueChanged($event)" />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <timepicker [(ngModel)]="confOrgSettings.weeklyAdminReportStartDate" [ngModelOptions]="{standalone: true}"></timepicker>
+                  </div>
+                </div>
+                <span class="help-block" *ngIf="displayMessage.WeeklyAdminReportStartDate">{{displayMessage.WeeklyAdminReportStartDate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <h5>Notifications</h5>
+      <div class="row">
+          <div class="col-6">
+            <div class="form-group form-group-default">
+              <label class="control-label" for="ticketType">setting 1</label>
+              <div class="form-control-plaintext">xyz</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group form-group-default">
+              <label class="control-label" for="ticketType">setting 2</label>
+              <div class="form-control-plaintext">345</div>
+            </div>
+          </div>
+        </div> -->
+      <button type="submit" class="btn   btn-warning text-dark" [disabled]="!settingsForm.valid" (click)="cmdSave()">Save</button>
+      <button type="button" class="btn   btn-default" (click)="cmdCancel()">Cancel</button>
+    </div>
+  </div>
+</div>
+<support-user-selection-dialog #supportUserSelectionDialogComponent (dialogHidden)="supportUserSelectionDialogComponentModalHiddenHandler()"></support-user-selection-dialog>

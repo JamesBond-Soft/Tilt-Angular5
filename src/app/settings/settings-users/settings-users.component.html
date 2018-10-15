@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="page-title">{{ pageTitle }}</h2>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn   btn-primary m-b-10 pull-right" style="margin-left: 4px;" (click)="cmdImportUser()"><span class="glyphicon glyphicon-plus"></span> Import User</button>
+        <button type="button" class="btn   btn-primary m-b-10 pull-right" (click)="cmdAddUser()"><span class="glyphicon glyphicon-plus"></span> Add User</button>        
+    </div>
+</div>
+<div class="card card-transparent">
+    <div class="card-block">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                    <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+                </div>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-condensed" id="condensedTable">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Organisation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of users | filterUser : searchString; let odd=odd; let even=even;" [ngClass]="{'alternateRow': odd}" (click)="cmdEditUser(user.userId)">
+                    <td class="v-align-middle semi-bold">{{ user.username }}</td>
+                    <td class="v-align-middle">{{ user.firstName }}</td>
+                    <td class="v-align-middle">{{ user.lastName }}</td>
+                    <td class="v-align-middle semi-bold">{{ getRoleName(user.roleId) }}</td>
+                    <td class="v-align-middle semi-bold">{{ user.email }}</td>
+                    <td class="v-align-middle semi-bold">{{ getOrganisationName(user.organisationId) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

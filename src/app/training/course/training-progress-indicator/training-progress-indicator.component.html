@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col center" *ngFor="let courseModuleProgressInfo of courseModuleProgressInfoList">
+    <h4 class="text-center" [ngClass]="getModuleHeadingCSS(courseModuleProgressInfo)"><i class="font-weight-normal" [ngClass]="getModuleIconCSS(courseModuleProgressInfo)"></i> {{courseModuleProgressInfo?.name}}</h4>
+  </div>
+</div>
+
+
+<div class="progress progress-small m-b-0">
+  <div class="progress-bar progress-bar-primary" [style.width.%]="moduleProgress"></div>
+</div>

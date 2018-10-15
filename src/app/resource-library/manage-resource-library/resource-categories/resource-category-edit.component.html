@@ -1,0 +1,71 @@
+
+<div class="row bg-light text-dark" *ngIf="showEditCard">
+  <div class="card">
+    <div class="card-block padding-20">
+     <div class="row">
+       <div class="col-6">
+         <h4>{{selectedCategory.name}}</h4>
+
+       </div>
+       <div class="col-6">
+         <button type="button" class="btn btn-info pull-right" (click)="cmdCancelEdit()"><i class="fa fa-times"></i> </button>
+       </div>
+     </div>
+  <form novalidate (ngSubmit)="cmdSave()" [formGroup]="categoryForm" class="col-12">
+
+    <div class="form-group">
+      <label for="parentGroup" class="col-form-label">Parent Category</label>
+      <div class="col">
+        <input type="text" id="parentCategoryName" class="form-control-plaintext" placeholder="" value="{{parentCategory?parentCategory.name:'None'}}"/>
+        <button type="button" class="btn btn-primary" [ngClass]="{'active':parentCategorySelectionEnabled}" data-toggle="button" aria-pressed="false"
+          (click)="cmdSelectParentCategory()">{{parentCategorySelectionEnabled ? 'Done' : 'Change'}}</button>
+        <button type="button" class="btn btn-secondary" *ngIf="parentCategorySelectionEnabled && parentCategory" (click)="cmdNoParentCategory()">None</button>
+        <div class="alert alert-primary" *ngIf="parentCategorySelectionEnabled">Select parent category from tree above</div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.name}">
+            <label class="control-label" for="name">Category Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Category Name (required)" formControlName="name" />
+            <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="description">Category Description</label>
+            <textarea id="description" class="form-control" rows="10" style="min-height: 100px;" formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group" style="margin-bottom: 10px">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="extCategoryRefNum">External Category Refence ID</label>
+            <input type="text" id="extCategoryRefNum" class="form-control" placeholder="Ext. Ref. ID" formControlName="extCategoryRefNum" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary  " (click)="cmdSaveCategory()" [disabled]="!categoryForm.valid">Save</button>
+    <button type="button" class="btn btn-info  " (click)="cmdAddSubCategory()" *ngIf="selectedCategory.resourceCategoryId">Add Sub-Group</button>
+    <button type="button" class="btn btn-danger   pull-right" (click)="cmdDeleteCategory()" *ngIf="selectedCategory.resourceCategoryId">Delete</button>
+
+
+  </form>
+</div>
+  </div>
+</div>

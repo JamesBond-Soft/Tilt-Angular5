@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-6">
+      <h2 class="page-title">{{ pageTitle }}</h2>
+  </div>
+  <div class="col-md-6">
+      <button type="button" class="btn   btn-primary m-b-10 pull-right" (click)="cmdAddCourse()"><span class="fa fa-plus"></span> Add Course</button>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+      <div class="form-group form-group-default">
+          <label class="control-label" for="cboOrganisation">Organisation</label>
+          <select id="cboOrganisation" class="form-control" name="cboOrganisation" [(ngModel)]="selectedOrganisation" (change)="cmdChangeOrg()">
+            <option *ngFor="let org of orgs" [ngValue]="org">{{org.organisationName}}</option>
+          </select>
+        </div>
+        
+      <form>
+          <div class="form-group">
+              <div class="input-group">
+                  <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                  <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+              </div>
+          </div>
+      </form>
+
+      <div class="table-responsive">
+          <table class="table table-hover table-condensed" id="condensedTable">
+              <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Ext Reference Num</th>
+                  <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let course of courses | filterCourses: searchString; let odd=odd; let even=even;" [ngClass]="{'alternateRow': odd}" (click)="cmdView($event, course)">
+                  <td class="v-align-middle semi-bold">{{ course.name }}</td>
+                  <td class="v-align-middle">{{ course.description }}</td>
+                  <td class="v-align-middle">{{ course.extRefCourseNum }}</td>
+                  <td class="v-align-middle semi-bold"><span class="label" [ngClass]="{'label-success': course.status === 1, 'label-info': course.status === 0, 'label-danger': course.status === 2 }">{{course.status | courseStatusNamePipe}}</span></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

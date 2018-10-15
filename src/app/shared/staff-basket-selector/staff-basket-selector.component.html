@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-6">
+    <h5>{{shelfTitle}}</h5>
+    <div class="card padding-20">
+
+      <div class="card-block">
+        <form>
+          <div class="form-group" [formGroup]="shelfForm">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </div>
+              <input type="text" class="form-control" name="txtSearchString" placeholder="Type to search..." formControlName="txtSearchString">
+            </div>
+          </div>
+        </form>
+        <div class="card-block" [hidden]="shelfItems && shelfItems.length">
+          <h5 align="center">Nothing to Select</h5>
+        </div>
+        <div class="table-responsive" [hidden]="(!shelfItems || !shelfItems?.length)">
+          <table class="table table-hover table-condensed" id="condensedTable">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let shelfItem of shelfItems" (click)="cmdSelectSingleShelfItem(shelfItem)">
+                <td>{{shelfItem.firstName}}</td>
+                <td>{{shelfItem.lastName}}</td>
+                <td>{{shelfItem.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <h5>{{basketTitle}}</h5>
+    <div class="card padding-20">
+      <div class="card-block" [hidden]="basketItems && basketItems.length">
+        <h5 align="center">Nothing Selected</h5>
+      </div>
+      <div class="card-block" [hidden]="!basketItems || !basketItems?.length">
+        <table class="table table-hover table-condensed" id="condensedTable">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>
+                <span class="pull-right">Action</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let basketItem of basketItems">
+              <td>{{basketItem.firstName}}</td>
+              <td>{{basketItem.lastName}}</td>
+              <td>{{basketItem.email}}</td>
+              <td>
+                <button type="button" class="btn btn-info pull-right" (click)="cmdSelectSingleBasketItem(basketItem)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

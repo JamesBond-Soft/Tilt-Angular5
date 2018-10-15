@@ -1,0 +1,100 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">{{pageTitle}}</h4>
+    <form [formGroup]="notificationForm" novalidate (ngSubmit)="cmdSave()">
+    <div class="form-group-attached">
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.notificationType}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="notificationType">Notification Type *</label>
+            <select id="notificationType" class="form-control" title="notificationType" formControlName="notificationType">
+              <option *ngFor="let item of INotificationType | enumToArray" [value]="INotificationType[item]">{{ item }}</option>
+            </select>
+            <span class="help-block" *ngIf="displayMessage.subject">{{displayMessage.notificationType}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.subject}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="subject">Subject *</label>
+            <input class="form-control" id="subject" type="text" placeholder="Subject (required)" formControlName="subject" />
+            <span class="help-block" *ngIf="displayMessage.subject">{{displayMessage.subject}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.body}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="body">Body *</label>
+            <textarea class="form-control" id="body" type="text" placeholder="Body (required)" formControlName="body" style="min-height: 200px"></textarea>
+            <span class="help-block" *ngIf="displayMessage.body">{{displayMessage.body}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.priority}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="priority">Priority *</label>
+            <select id="priority" class="form-control" title="priority" formControlName="priority">
+              <option value="0">None</option>
+              <option value="1">Very Low</option>
+              <option value="2">Low</option>
+              <option value="3">Medium</option>
+              <option value="4">High</option>
+              <option value="5">Very High</option>
+            </select>
+            <span class="help-block" *ngIf="displayMessage.priority">{{displayMessage.priority}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.scheduledDate}">
+          <div class="col-md-12">
+            <div class="form-group form-group-default">
+              <div class="row">
+                <div class="col-8">
+                    <label class="control-label" for="scheduledDate">Scheduled Date *</label>
+                    <input class="form-control" id="scheduledDate" type="text" placeholder="Scheduled Date (required)" formControlName="scheduledDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                </div>
+                <div class="col-4">
+                    <timepicker formControlName="scheduledDate"></timepicker>
+                </div>
+              </div>
+              <span class="help-block" *ngIf="displayMessage.scheduledDate">{{displayMessage.scheduledDate}}</span>
+            </div>
+          </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Groups Assigned</h5>
+          <div class="row">
+            <div class="col-12">
+              <basket-selector #groupBasketSelector shelfTitle="Available Groups" basketTitle="Selected Groups" dataBranchField="subGroups" displayField="name" (isDirty)="basketSelectorIsDirtyEventHandler($event)"></basket-selector>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Users Assigned</h5>
+          <div class="row">
+            <div class="col-12">
+                <staff-basket-selector #staffBasketSelector shelfTitle="Available Staff" basketTitle="Selected Staff" (isDirty)="staffbasketSelectorIsDirtyEventHandler($event)" (searchStringChanged)="searchStringChangedEventHandler($event)"></staff-basket-selector>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row clearfix" *ngIf="notificationBatch?.notificationsCreated">
+        <div class="col-12">
+            <div class="alert alert-primary">Please note that notification(s) were sent</div>
+        </div>
+      </div> 
+
+      <button type="submit" class="btn   btn-primary" [disabled]="!notificationForm.valid" *ngIf="!notificationBatch?.notificationsCreated">Save</button>
+      <button type="button" class="btn   btn-danger" *ngIf="pageTitle?.indexOf('Create') === -1 && !notificationBatch?.notificationsCreated" (click)="cmdDelete()">Delete</button>
+      <button type="button" class="btn   btn-default" (click)="cmdCancel()">{{!notificationBatch?.notificationsCreated ? 'Cancel' : 'Back' }}</button>
+    </div>
+    </form>
+  </div>
+</div>

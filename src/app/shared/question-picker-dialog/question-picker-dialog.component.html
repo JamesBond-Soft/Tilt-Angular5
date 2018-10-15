@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <h5 class="modal-title ">{{pageTitle}}</h5>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="cmdSave()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" [formGroup]="questionForm">
+  <div class="card card-borderless">
+    <div class="card-body ">
+      <div class="row" formArrayName="questions" *ngFor="let questionItem of questionForm.get('questions')['controls']; let i = index;" >
+        <div class="col-6" [formGroupName]="i">
+          <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.question}">
+            <label class="form-control-label" for="question">Question</label>
+            <input type="text" class="form-control" id="question" formControlName="question"/>
+            <span class="help-block" *ngIf="displayMessage.question">{{displayMessage.question}}</span>
+          </div>
+        </div>
+        <div class="col-5" [formGroupName]="i">
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.correctAnswer}">
+              <label class="form-control-label">Correct Answer</label>
+              <input type="text" class="form-control" formControlName="correctAnswer"/>
+              <span class="help-block" *ngIf="displayMessage.correctAnswer">{{displayMessage.correctAnswer}}</span>
+            </div>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-danger m-l-5" (click)="cmdRemoveQuestion(questionItem)" >X</button>
+        </div>
+      </div>
+      <div class="row p-t-10">
+        <div class="col-12">
+          <button type="button" class="btn btn-primary" (click)="cmdAddQuestion()">+</button>
+        </div>
+      </div>
+
+      <div class="rol p-t-10">
+        <div class="col-12">
+          <label class="form-control-label">Additional Incorrect Answers (Optional)</label>
+          <div style="width: 100%; min-height: 100px; overflow-y: auto; border: silver 1px solid;">
+            <textarea class="form-control" style="min-height: 100px" formControlName="incorrectAnswers"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="rol p-t-10">
+        <div class="col-6">
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.maximumAllowedWrong}">
+              <label class="form-control-label">Maximum Allowed Wrong</label>
+              <input type="number" class="form-control" placeholder="Max Allowed Wrong" min="0" formControlName="maximumAllowedWrong"  />
+              <span class="help-block" *ngIf="displayMessage.maximumAllowedWrong">{{displayMessage.maximumAllowedWrong}}</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button type="button" class="btn btn-primary pull-left" (click)="cmdSave()">Save</button>
+  <br>
+</div>

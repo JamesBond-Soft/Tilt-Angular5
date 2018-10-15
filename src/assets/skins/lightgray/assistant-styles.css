@@ -1,0 +1,6 @@
+.video-placeholder {
+    border: silver 1px solid;
+    background-color: darkgray;
+    min-height: 100px;
+    min-width: 100px;
+}

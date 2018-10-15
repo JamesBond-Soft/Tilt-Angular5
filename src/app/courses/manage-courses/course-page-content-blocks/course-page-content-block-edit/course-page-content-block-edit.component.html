@@ -1,0 +1,54 @@
+<div class="card padding-20">
+    <div class="card-block">
+        <div class="row">
+            <div class="col-6">
+                <h4>{{pageTitle}}</h4>
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-info pull-right" (click)="cmdCancelEditPageContentBlock()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row" [formGroup]="contentBlockForm">
+            <div class="col-12">
+                <div class="card padding-20">
+                    <div class="card-body">
+                        <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.contentBlockName}">
+                            <label class="control-label" for="contentBlockName">Name *</label>
+                            <input type="text" class="form-control" id="contentBlockName" placeholder="Name (required)" formControlName="contentBlockName" />
+                            <span class="help-block" *ngIf="displayMessage.contentBlockName">{{displayMessage.contentBlockName}}</span>
+                        </div>
+
+                        <div class="form-group form-group-default" [hidden]="contentBlockForm.get('blockType').value === IContentBlockType.Video">
+                            <label class="control-label" for="my-editor">Content</label>
+                            <app-tiny-editor #tinyEditor [elementId]="'my-editor'" (onEditorContentChange)="contentBlockForm.get('content').markAsDirty()"
+                                (onVideoSelected)="onVideoSelectedHandler($event)"></app-tiny-editor>
+                        </div>
+                        <div class="form-group form-group-default" [hidden]="contentBlockForm.get('blockType').value === IContentBlockType.HTML">
+                            <label class="control-label">Content Video</label>
+                            <span class="form-control-static"></span>
+                            <div class="form-control-static">
+                                <span *ngIf="!contentBlockForm.get('resourceLibraryAssetId').value">None</span>
+                                <span *ngIf="contentBlockForm.get('resourceLibraryAssetId').value">{{contentBlockForm.get('resourceLibraryAssetName').value}}</span>&nbsp;
+                                <span class="label label-inverse"
+                                    (click)="openVideoSelectionDialog()">Change</span>&nbsp;
+                                <span class="label label-inverse label-danger" (click)="cmdClearVideo()"
+                                    *ngIf="contentBlockForm.get('resourceLibraryAssetId').value > 0">Clear</span>
+                            </div>
+                            <span class="help-block" *ngIf="displayMessage.resourceLibraryAssetId">{{displayMessage.resourceLibraryAssetId}}</span>
+                            <div class="mw-100 mt-2 text-light" style="background-color: black; min-height: 200px; ">
+                                <h1>
+                                    <i class="fa fa-file-video-o" aria-hidden="true"></i> {{contentBlockForm.get('resourceLibraryAssetName').value}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button type="button" class="btn btn-primary  " (click)="cmdSavePageContentBlock()">Save</button>
+        <button type="button" class="btn btn-danger  " (click)="cmdDeletePageContentBlock()">Delete</button>
+        <button type="button" class="btn btn-default  " (click)="cmdCancelEditPageContentBlock()">Cancel</button>
+    </div>
+</div>

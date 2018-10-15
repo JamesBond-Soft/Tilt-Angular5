@@ -1,0 +1,48 @@
+<app-sidebar></app-sidebar>
+
+<div class="page-container ">
+  <app-header></app-header>
+
+	<div class="page-content-wrapper">
+		<!-- START PAGE CONTENT -->
+
+		<div class="content">
+			<!-- START JUMBOTRON -->
+
+			<div class="jumbotron" pg-parallax>
+				<div class="container-fluid container-fixed-lg">
+					<div class="inner">
+						<breadcrumb [allowBootstrap]="true"></breadcrumb>
+					</div>
+				</div>				
+			</div>
+			<!-- END JUMBOTRON -->
+			<!-- START CONTAINER FLUID -->
+
+			<div class=" container-fluid container-fixed-lg">		
+				<!-- BEGIN PlACE PAGE CONTENT HERE -->
+				
+				<router-outlet></router-outlet>
+				<!-- END PLACE PAGE CONTENT HERE -->
+			</div>
+			<!-- END CONTAINER FLUID -->
+		</div>
+		<!-- END PAGE CONTENT -->
+		<!-- START COPYRIGHT -->
+		<!-- START CONTAINER FLUID -->
+		<!-- START CONTAINER FLUID -->
+		<div class=" container-fluid  container-fixed-lg footer">
+			<div class="copyright sm-text-center">
+				<p class="small no-margin pull-left sm-pull-reset">
+					<span class="hint-text">Copyright &copy; 2018 TILT Suite</span>
+					<span class="sm-block"><a href="#" class="m-l-10 m-r-10">Support</a> <span class="muted">|</span> <a href="#" class="m-l-10">Contact</a></span>
+				</p>
+				<p class="small no-margin pull-right sm-pull-reset" >
+					Version {{version}}
+				</p>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<!-- END COPYRIGHT -->
+  </div>
+</div>

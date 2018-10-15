@@ -1,0 +1,10 @@
+// Media
+
+.resource-library {
+    &.video-placeholder {
+        border: silver 1px solid;
+        background-color: $color-menu;
+        min-height: 100px;
+        min-width: 100px;
+    }
+}

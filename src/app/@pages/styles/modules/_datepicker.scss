@@ -1,0 +1,114 @@
+$box-shadow-base : none;
+$disabled-bg: $color-master-light;
+
+.pg-calendar{
+  padding: 15px;
+  max-width: 250px;
+  .date-panel{
+    position: relative;
+    .card-header{
+      min-height: auto;
+    }
+    .overlay-view{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      top: 0;
+      border:0;
+      margin: 0;
+      z-index: 1;
+      .card-header{
+        padding: 0;
+      }
+      pg-calendar-view, .pg-calendar-view{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+      }
+      .month-panel-cell{
+        padding: 11px;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+  .calendar-header{
+    width: 100%;
+  }
+  .calendar-body{
+    .table tbody tr td{
+      padding:0;
+    }
+    .table thead tr th{
+      padding-left: 0;
+      padding-right: 0;
+      border:0;
+    }
+    .table thead tr th:first-child{
+      padding-left: 0 !important;
+    }
+  }
+  .cell{
+    border: 0;
+    cursor: pointer;
+    .date{
+      text-align: center;
+      border-radius: 3px;
+      transition: all .2s ease;
+      color: $color-master;
+      padding: 6px 8px;
+    }
+    &:hover{
+      .date{
+        background-color: $color-master-light;
+      }
+    }
+    &.last-month-cell,&.next-month-btn-day{
+      .date{
+      color:$color-master-light
+      } 
+    }
+    &.selected-day,&.selected-cell{
+      .date{
+      background-color: $color-primary;
+      color:#fff;
+      }
+    }
+  }
+  .wrap-scroller{
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
+    .horizontal-dates{
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: column;
+      & > div{
+        transition: transform .2s ease-in;
+      }
+      .month-select{
+        flex-basis: 80px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        text-align: center;
+        color:$color-master-dark;
+        opacity: 0.7;
+        &.selected-date{
+          color:$color-master-darker;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .year-select{
+    font-size: 12px;
+    color: $color-master;
+  }
+}
+

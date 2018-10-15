@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-6">
+    <h5>{{shelfTitle}}</h5>
+    <div class="card padding-20">
+      <div class="card-block" [hidden]="shelfItems && shelfItems.length">
+          <h5 align="center">Nothing to Select</h5>
+      </div>
+      <div class="card-block" [hidden]="!shelfItems || !shelfItems?.length">
+        <ul class="tree">
+          <tree-branch-item *ngFor="let shelfItem of shelfItems" [data]="shelfItem" [displayField]="displayField" [dataBranchField]="dataBranchField" seriesName="shelf"></tree-branch-item>
+        </ul>
+        <button type="button" class="btn   btn-secondary" (click)="cmdSelectSingleShelfItem()"><i class="fa fa-angle-right"></i> Select</button>
+        <button type="button" class="btn   btn-secondary" (click)="cmdSelectAllShelfItems()"><i class="fa fa-angle-double-right"></i> Select All</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <h5>{{basketTitle}}</h5>
+    <div class="card padding-20">
+      <div class="card-block" [hidden]="basketItems && basketItems.length">
+        <h5 align="center">Nothing Selected</h5>
+      </div>
+      <div class="card-block" [hidden]="!basketItems || !basketItems?.length">
+        <ul class="tree">
+          <tree-branch-item *ngFor="let basketItem of basketItems" [data]="basketItem" [displayField]="displayField" [dataBranchField]="dataBranchField" seriesName="basket"></tree-branch-item>
+        </ul>
+        <button type="button" class="btn   btn-secondary" (click)="cmdSelectSingleBasketItem()"><i class="fa fa-angle-left"></i> Select</button>
+        <button type="button" class="btn   btn-secondary" (click)="cmdSelectAllBasketItems()"><i class="fa fa-angle-double-left"></i> Select All</button>
+      </div>
+    </div>
+  </div>
+</div>

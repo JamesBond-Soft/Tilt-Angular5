@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="page-title">{{pageTitle}}</h2>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-primary   m-b-10 pull-right" (click)="cmdAddTicket()">
+      <span class="fa fa-plus"></span> Add Ticket</button>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-body">
+    <h4 class="card-title"></h4>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <div *ngIf="!tickets || !tickets?.length">
+            <h4 class="text-center">Add a report to get started.</h4>
+            <br/>
+            <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddTicket()">Add Ticket</button>
+          </div>
+          <table class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th>Date Created</th>
+                <th>Ticket Name</th>
+                <th>Ticket Type</th>
+                <th>Organisation</th>
+                <th>Assigned to</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of tickets" (click)="cmdEditTicket($event, ticket)">
+                <td>{{ticket.createdDate | date}}</td>
+                <td>{{ticket.title | truncate}}</td>
+                <td><span class="label" [ngClass]="getTicketTypeCSS(ticket)">{{ ticket.ticketType | genericStatusNamePipe:"ITicketType"}}</span></td>
+                <td>{{ ticket.organisationId | organisationNamePipe:orgs }}</td>
+                <td>{{ ticket.assignedUserDisplayName }}</td>
+                <td><span class="label" [ngClass]="getTicketStatusCSS(ticket)">{{ ticket.status | genericStatusNamePipe:"ITicketStatusType"}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

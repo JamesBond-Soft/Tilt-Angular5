@@ -1,0 +1,128 @@
+<div class="row" style="padding-bottom: 10px">
+  <div class="col-md-6">
+    <h2>{{webinar?.name}}</h2> 
+  </div>
+  <div class="col-md-6" *ngIf="webinar.status != 3">
+      <button *ngIf="currentUserId == webinar.createdByUserId" class="btn btn-success btn-cons m-b-10 pull-right" type="button" (click)="broadcast()"><i class="fa fa-wifi"></i> <span class="bold">Start Broadcast</span>
+      </button> 
+      <button class="btn btn-info btn-cons m-b-10 pull-right" type="button" (click)="edit()"><i class="fa fa-paste"></i> <span class="bold">Edit</span>
+      </button>
+      <button  class="btn btn-danger btn-cons m-b-10 pull-right" type="button" (click)="delete()"><i class="fa fa-close"></i> <span class="bold">Delete</span>
+      </button>
+  </div>
+  <div class="col-md-6" *ngIf="webinar.status == 3">
+      <button class="btn btn-danger m-b-10 pull-right" type="button" (click)="delete()"><i class="fa fa-close"></i> <span class="bold">Delete</span>
+      </button>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+    <h5>Details</h5>
+     <div class="form-group-attached">
+      <div class="row clearfix">
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="webinarName">Webinar Name *</label>
+            <input class="form-control" id="webinarName" type="text" [value] = "webinar?.name "  />
+          </div>
+        </div>
+       <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="datetime">Scheduled Date and Time *</label>
+            <input class="form-control" id="datetime" type="text" [value] = " webinar.scheduledDate | date "  />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="actualduration">Actual Duration</label>
+            <input type="text" class="form-control"  id='actualduration'  />
+          </div>
+        </div> 
+
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="duration">Expected Duration</label>
+            <input type="text" class="form-control" [value]="webinar?.duration" placeholder="Duration" id='duration'  />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="resource">Record as Resource</label>
+            <input type="text" class="form-control" [value] = "webinar?.recordAsResource" id='resource'  />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="notification">Notification Sent</label>
+            <input type="text" class="form-control" [value] ="webinar?.notificationType | genericStatusNamePipe : 'IWebinarNotificationType' " id='notification'  />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="Description">Description</label>
+            <input class="form-control" id="Description" type="text" placeholder="Description"  [value] = " webinar?.description "/>
+          </div>
+        </div> 
+      </div>
+
+    </div> 
+
+    <div class="row">
+      <div class="col-md-12">
+        <h5>Agenda</h5>
+
+        <div class="card">
+          <div class="card-block">
+            <div class="card-body">
+              <div class="row ">
+                <div class="col-md-12">
+                  <p> {{ webinar?.agenda }}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="row" *ngIf="webinar.status == 3" >
+      <div class="col-md-6" *ngIf="webinar.recordAsResource && recordedFileUrl" >
+            <!-- <vg-player #vgplayer class="embed-responsive embed-responsive-16by9">
+                <video autoplay class="embed-responsive-item" [vgHls]="recordedFileUrl" #media  id="singleVideo"
+                  controls type="contentType">
+                </video>
+              </vg-player> -->
+              <video controls [src]="recordedFileUrl" class="embed-responsive embed-responsive-16by9">
+              </video>              
+      </div>
+
+      <div class="col-md-6">
+        <h5>Users in Attendance - <span class="label label-success">{{attendUserList?.length}}</span> </h5>
+        <div class="card">
+          <div class="card-block">
+            <div class="card-body">
+
+                  <table class="table table-hover table-condensed" id="condensedTable">
+                    <thead>
+                    <tr>
+                      <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of attendUserList">
+                          <td class="v-align-middle semi-bold">{{item.firstName}} {{item.lastName}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

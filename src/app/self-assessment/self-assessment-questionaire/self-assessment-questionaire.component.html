@@ -1,0 +1,50 @@
+<div class="card" *ngIf="questionIndex === 0">
+  <div class="card-block">
+
+    <div class="card-body text-center">
+      <h2>Hi, {{userDisplayName}}</h2>
+
+
+      <!-- <h1 class="card-subtitle">Where in the business do you fit</h1> -->
+      <h3>we're going to ask you a few questions to get to know you.</h3>
+<br><br>
+      <button type="button" class="btn   btn-primary btn-block" (click)="cmdNextQuestion()">Let's Get Started</button>
+
+    </div>
+  </div>
+</div>
+
+<div class="progress progress-small m-b-0" *ngIf="questionIndex > 0 || questionIndex === -1">
+  <div class="progress-bar progress-bar-primary" [style.width.%]="questionProgress"></div>
+</div>
+
+<div class="card" *ngIf="questionIndex > 0">
+    <div class="card-block">
+  
+      <div class="card-body text-center">
+        <h1 class="card-subtitle">{{currentQuestion?.question}}</h1>
+        <br><br>
+        <div class="row">
+          <div class="col-md-6" *ngFor="let responseItem of currentQuestion?.responses">
+            <button type="button" class="btn   btn-primary btn-block" (click)="cmdNextQuestion(currentQuestion, responseItem)">{{responseItem.response}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="card" *ngIf="questionIndex === -1">
+  <div class="card-block">
+
+    <div class="card-body text-center">
+      <h1 class="card-subtitle"><i class="fa fa-thumbs-up"></i> </h1>
+
+      <h1 class="card-subtitle">Thanks!</h1>
+      <h3 class="card-subtitle">Once you have been approved, you'll be able to start your assessments.</h3>
+
+      <br><br>
+      <button type="button" class="btn   btn-primary btn-block" (click)="cmdFinishQuestionaire()" >Done</button>
+
+    </div>
+  </div>
+</div>

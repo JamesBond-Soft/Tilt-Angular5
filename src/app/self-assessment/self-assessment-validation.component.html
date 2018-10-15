@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="page-title">{{ pageTitle }}</h2>
+  </div>
+  <div class="col-md-6">
+    <h5 class="pull-right"><b>Date Lodged:</b>
+    {{selfAssessmentReport.createdDate | date}}</h5>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-block">
+    <div class="card-header  ">
+      <h5 class="card-subtitle">Staff Details</h5>
+
+      <div class="card-controls">
+
+      </div>
+    </div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-md-3">Name</dt>
+        <dd>{{selfAssessmentReport.userProfile.firstName}} {{selfAssessmentReport.userProfile.lastName}}</dd>
+        <dt class="col-md-3">DOB</dt>
+        <dd>{{selfAssessmentReport.userProfile.dob | date}}</dd>
+        <dt class="col-md-3">Employee Reference #</dt>
+        <dd>{{selfAssessmentReport.userProfile.hrStaffReferenceID}}</dd>
+
+      </dl>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+<div class="card-block">
+  <div class="card-header  ">
+    <h5 class="card-subtitle">Questionnaire Details</h5>
+
+    <div class="card-controls">
+
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+    <thead>
+    <th>Question</th>
+    <th>Answer</th>
+    </thead>
+      <tr *ngFor="let sardItem of selfAssessmentReport.details">
+        <td><b>{{sardItem.question}}</b></td>
+      <td>{{sardItem.answer}}</td>
+      </tr>
+  </table>
+  </div>
+</div>
+</div>
+
+
+<div class="card">
+  <div class="card-block">
+    <div class="card-header  ">
+      <h5 class="card-subtitle">Group Determined</h5>
+
+      <div class="card-controls">
+
+      </div>
+    </div>
+    <div class="card-body">
+
+        <b *ngIf="!selfAssessmentReport.groupIdOverride">{{selfAssessmentReport.group.name}}</b>
+        <b *ngIf="selfAssessmentReport.groupOvveride">{{selfAssessmentReport.groupOvveride.name}}</b>
+        <span class="label label-inverse" (click)="cmdOverrideGroup()">Change</span>
+
+    </div>
+  </div>
+</div>
+<button type="button" class="btn   btn-primary" (click)="cmdApprove()">Approve</button>
+<button type="button" class="btn   btn-default" [routerLink]="['/selfassessments']">Cancel</button>
+
+<br><br>

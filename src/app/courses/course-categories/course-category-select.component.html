@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Select Course Category</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <button type="button" class="btn btn-primary  " (click)="cmdSetNone()">Select None</button>
+  <ul>
+    <course-category-selection-item *ngFor="let category of categories" [category]="category"></course-category-selection-item>
+  </ul>
+</div>

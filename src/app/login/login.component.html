@@ -1,0 +1,68 @@
+<div class="login-wrapper ">
+	<!-- START Login Background Pic Wrapper-->
+	<div class="bg-pic">
+		<video autoplay muted loop id="myVideo" >
+			<source src="assets/img/LoginBG.m4v" type="video/mp4">
+		</video>
+		<!-- START Background Pic
+		<img src="assets/img/loginBG.jpg" data-src="assets/img/loginBG.jpg" data-src-retina="assets/img/loginBG.jpg" alt="" class="lazy">
+		<!-- END Background Pic-->
+	</div>
+	<!-- END Login Background Pic Wrapper-->
+	<!-- START Login Right Container-->
+	<div class="login-container bg-white">
+		<div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+			<img src="assets/img/Logo_325.png" alt="logo" data-src="assets/img/Logo_325.png" data-src-retina="assets/img/Logo_325.png"
+			     width="250">
+
+			<p class="p-t-35">Sign in to your TILT Suite Account</p>
+			<!-- START Login Form -->
+			<form id="form-login" class="p-t-15" role="form" (ngSubmit)="cmdLogin()"  #loginForm="ngForm">
+				<!-- START Form Control-->
+				<div class="form-group form-group-default" [class.has-error]="loginUserName.invalid && (loginUserName.dirty || loginUserName.touched)">
+					<label>Login</label>
+					<input  pgFormGroupDefault type="text" id="userName" name="userName" [(ngModel)]="username"  #loginUserName="ngModel" required  placeholder="User Name" class="form-control">
+				</div>
+				<div *ngIf="loginUserName.invalid && (loginUserName.dirty || loginUserName.touched)" >
+					<label  *ngIf="loginUserName.errors.required" class="error" >This field is required.</label>
+				</div>
+				<!-- END Form Control-->
+				<!-- START Form Control-->
+				<div class="form-group form-group-default" [class.has-error]="loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)">
+					<label>Password</label>
+					<input pgFormGroupDefault type="password" class="form-control" placeholder="Credentials" id="password" name="password" [(ngModel)]="password"  #loginPassword="ngModel" required>
+				</div>
+				<div *ngIf="loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)" >
+					<label  *ngIf="loginPassword.errors.required" class="error" >This field is required.</label>
+				</div>
+				<!-- START Form Control-->
+				<div class="alert alert-danger" role="alert" [hidden]="!errorMessage">
+					{{errorMessage}}
+				</div>
+				<div class="row">
+					<div class="col-md-6 no-padding sm-p-l-10">
+						<button class="btn btn-primary btn-cons m-t-10" type="submit"  [class.disabled]="loginForm.invalid">Sign in</button>
+
+					</div>
+					<div class="col-md-6 d-flex align-items-center justify-content-end">
+						<a href="#" class="text-info small" (click)="cmdHelp($event)">Help? Contact Support</a>
+					</div>
+				</div>
+				<!-- END Form Control-->
+			</form>
+			<!--END Login Form-->
+			<div class="pull-bottom sm-pull-bottom">
+				<div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
+					<div class="col-sm-12 no-padding m-t-10">
+						<p>
+							<small>
+								Version {{version}}
+							</small>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END Login Right Container-->
+</div>

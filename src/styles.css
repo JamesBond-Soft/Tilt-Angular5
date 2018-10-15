@@ -1,0 +1,115 @@
+/* You can add global styles to this file, and also import other style files */
+/* Spinner */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
+
+.spinner {
+    font-size:300%;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    z-index:10
+  }
+  
+  .glyphicon-spin {
+      -webkit-animation: spin 1000ms infinite linear;
+      animation: spin 1000ms infinite linear;
+  }
+  @-webkit-keyframes spin {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+      100% {
+          -webkit-transform: rotate(359deg);
+          transform: rotate(359deg);
+      }
+  }
+  @keyframes spin {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+      100% {
+          -webkit-transform: rotate(359deg);
+          transform: rotate(359deg);
+      }
+  }
+
+  .myplaceholder {
+    border: silver 1px solid;
+    min-height: 100px;
+    min-width: 100px;
+    background-color: cornflowerblue;
+  }
+
+
+  
+  /**
+    Style customization 
+    6.1.2018
+    Vlad
+  */
+  .input-group-addon {
+    background: #f0f0f0;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    color: rgba(98, 98, 98, 0.47);
+    font-size: 14px;
+    padding: 6px 9px;
+    border-right: 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.07);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .page-container .page-content-wrapper {
+    background: #fafafa;
+  }
+  .breadcrumb > .breadcrumb-item.active {
+    color : #39B54A ! important ;
+  }
+  .btn {
+    font-family: 'Montserrat'!important;
+  }
+
+  .page-sidebar .sidebar-header .sidebar-header-controls {
+      margin-left:25px;
+  }
+
+  .page-sidebar .sidebar-header  .sidebar_logo {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+  }
+
+  body.sidebar-visible .page-sidebar .sidebar-header  .sidebar_logo {
+        display:none;
+  }
+
+  breadcrumb .fluid-bread {
+      padding:10px 0;
+      background-color: transparent !important;
+  }
+
+  breadcrumb .fluid-bread .container {
+      margin:0;
+  }
+  
+  breadcrumb .fluid-bread .breadcrumb {
+      background-color: transparent !important;
+  }
+
+  @media only screen and (max-width : 991px) {
+    .page-sidebar .sidebar-header .sidebar-header-controls .btn {
+       display:none !important;
+    }
+
+    .page-sidebar .sidebar-header  .sidebar_logo {
+        display: none !important;
+    }
+
+  }
+
+  .modal-max-width{
+      width: 100% !important
+  }

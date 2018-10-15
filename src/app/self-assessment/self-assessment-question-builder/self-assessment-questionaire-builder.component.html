@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>Self Assessment Questionaire Builder</h2>
+  </div>
+  <div class="col-md-6">
+    <!--CONTROL SECTION -->
+    <div class="float-right" *ngIf="questions?.length > 0">
+      <button type="button" class="btn   btn-secondary" (click)="cmdEditQuestionOrder()" [hidden]="showEditCard || editQuestionOrder">Edit Question Order</button>
+      <button type="button" class="btn   btn-primary" (click)="cmdDoneEditQuestionOrder()" [hidden]="showEditCard || !editQuestionOrder">Done</button>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <div class="card padding-20">
+      <div class="card-block">
+
+        <div class="form-group form-group-default">
+          <label class="control-label" for="cboOrganisation">Organisation</label>
+          <select id="cboOrganisation" class="form-control" name="cboOrganisation" [(ngModel)]="selectedOrganisation" (change)="cmdChangeOrg()"
+            [disabled]="showEditCard">
+            <option *ngFor="let org of orgs" [ngValue]="org">{{org.organisationName}}</option>
+          </select>
+        </div>
+        <div class="table-responsive">
+          <div *ngIf="questions?.length > 0">
+              <table class="table table-hover table-condensed" id="condensedTable">
+                  <tbody>
+                    <tr *ngFor="let questionItem of questions; let i = index" (click)="cmdSelectQuestion(questionItem)">
+                      <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':questionItem === selectedQuestion}">{{questionItem.question}} <i class="fa fa-arrow-right" *ngIf="questionItem === selectedQuestion"></i></td>
+                      <td width="20%" [ngClass]="{'bg-primary':questionItem === selectedQuestion}">
+                        <div class="btn-toolbar m-t-10" role="toolbar">
+                          <div class="btn-group btn-group-xs" *ngIf="editQuestionOrder">
+                            <button type="button" class="btn btn-default" [disabled]="i === (questions.length -1)" (click)="cmdMoveOrderDown(questionItem, $event)">
+                              <i class="fa fa-arrow-down"></i>
+                            </button>
+                            <button type="button" class="btn btn-default" [disabled]="i === 0" (click)="cmdMoveOrderUp(questionItem, $event)">
+                              <i class="fa fa-arrow-up"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br/>
+                <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddNewQuestion()" [hidden]="showEditCard || editQuestionOrder">Add Question</button>
+                <br>
+          </div>
+          <div *ngIf="!questions || questions?.length === 0">
+            <h4 class="text-center">Add a question to get started.</h4>
+            <br/>
+            <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddNewQuestion()">Add Question</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <self-assessment-questionaire-edit [showEditCard]="showEditCard" [selectedQuestion]="selectedQuestion" (onFinishEditEvent)="onFinishEditEvent($event)"></self-assessment-questionaire-edit>
+  </div>
+</div>

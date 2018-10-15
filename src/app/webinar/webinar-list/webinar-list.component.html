@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>Webinars</h2>
+  </div>
+  <div class="col-md-6">
+    <a *ngIf="canCreateWebinar" [routerLink]="['/webinar/new-broadcast/0']" routerLinkActive="active" class="btn btn-primary m-b-10 pull-right" ><span class="fa fa-plus"></span> Start / Schedule Webinar</a>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+    <div class="table-responsive">
+      <table *ngIf="liveWebinarList.length > 0" class="table table-hover table-condensed" id="condensedTable">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>When </th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of liveWebinarList" (click)="attendWebinar(item)"> 
+          <td class="v-align-middle semi-bold">{{ item.name }}</td>
+          <td class="v-align-middle">{{ item.description }}</td>
+          <td class="v-align-middle">{{ item.scheduledDate | date }}</td>
+          <td class="v-align-middle semi-bold"><span class="label label-danger">   {{ item.status | genericStatusNamePipe : 'IWebinarStatus' }}</span></td>
+          <td> <button class="btn btn-success btn-cons" >Attend</button> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-responsive">
+      <table *ngIf="unliveWebinarList.length > 0" class="table table-hover table-condensed" id="condensedTable">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>When </th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor = "let item of unliveWebinarList">
+          <td class="v-align-middle semi-bold">{{ item.name }}</td>
+          <td class="v-align-middle">{{ item.description }}</td>
+          <td class="v-align-middle">{{ item.scheduledDate | date}}</td>
+          <td class="v-align-middle semi-bold">
+          <span class="label" [ngClass]="{
+            'label-info' : item.status === 0,
+            'label-warning' : item.status === 1,
+            'label-success' : item.status === 3
+          }">
+            {{ item.status | genericStatusNamePipe : 'IWebinarStatus' }}
+          </span>
+         </td>
+         <td> <button class="btn btn-primary btn-cons" *ngIf="canCreateWebinar" (click)="detail(item)">Detail</button> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

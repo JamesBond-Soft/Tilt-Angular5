@@ -1,0 +1,21 @@
+.typehead{
+    position: relative;
+    .dropdown-menu{
+        padding: 8px 8px 10px 8px;
+        width: 100%;
+        background: #fff;
+        .dropdown-item{
+            &:first-child{
+                padding-top:0;
+            }
+            &:last-child{
+                padding-bottom: 0;
+            }
+        }
+    }
+    &.form-group-default{
+        .dropdown-menu{
+            left: 0 !important;
+        }
+    }
+}

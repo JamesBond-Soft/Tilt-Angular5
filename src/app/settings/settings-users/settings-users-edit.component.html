@@ -1,0 +1,223 @@
+<div class="col-md-12">
+  <!-- START card -->
+  <div class="card card-transparent">
+    <div class="card-block">
+      <h4 class="card-title">{{pageTitle}}</h4>
+
+      <form novalidate (ngSubmit)="cmdSave()" [formGroup]="userForm">
+        <h5>Personal Information</h5>
+        <div class="form-group-attached">
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.firstName}">
+                <label class="control-label" for="firstName">First Name *</label>
+                <input class="form-control" id="firstName" type="text" placeholder="First Name (required)" formControlName="firstName" />
+                <span class="help-block text-danger" *ngIf="displayMessage.firstName">{{displayMessage.firstName}}</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group form-group-default">
+                  <label class="control-label">Middlename</label>
+                  <input type="text" class="form-control" name="middlename" formControlName="middlename" />
+                </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+              <div class="col-md-6">
+                  <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.lastName}">
+                    <label class="control-label" for="txtUsername">Last Name *</label>
+                    <input class="form-control" id="lastName" type="text" placeholder="Last Name (required)" formControlName="lastName" />
+                    <span class="help-block text-danger" *ngIf="displayMessage.lastName">{{displayMessage.lastName}}</span>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group form-group-default" formGroupName="userProfileGroup">
+                      <label class="control-label" for="dob">DOB</label>
+                      <input class="form-control" id="dob" type="text" placeholder="Date of Birth" formControlName="dob" />
+                  </div>
+              </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.username}">
+                <label class="" for="txtUsername">Username *</label>
+                <input class="form-control" id="txtUsername" type="text" placeholder="Username (required)" formControlName="username" />
+                <span class="help-block text-danger" *ngIf="displayMessage.username">{{displayMessage.username}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h5 class="m-t-10">Contact Information</h5>
+
+        <div class="form-group-attached">
+
+          <div class="row clearfix" formGroupName="emailGroup" [ngClass]="{'has-error': displayMessage.emailGroup}">
+            <div class="col-md-6">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="firstName">Email</label>
+                <input class="form-control" id="email" type="text" placeholder="Email" formControlName="email" />
+                <span class="help-block text-danger" *ngIf="displayMessage.email">{{displayMessage.email}}</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="txtUsername">Confirm Email</label>
+                <input class="form-control" id="confirmEmail" type="text" placeholder="Confirm Email" formControlName="confirmEmail" />
+                <span class="help-block text-danger" *ngIf="displayMessage.confirmEmail">{{displayMessage.confirmEmail}}</span>
+                <span class="help-block text-danger" *ngIf="userForm.get('emailGroup').errors?.match">
+                  The confirmation does not match the email address
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" formGroupName="userProfileGroup">
+                <label class="control-label" for="phone">Personal Phone</label>
+                <input class="form-control" id="phone" type="text" placeholder="Phone" formControlName="phone" />
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default" formGroupName="userProfileGroup">
+                <label class="control-label" for="workPhone">Work Phone</label>
+                <input class="form-control" id="workPhone" type="text" placeholder="Work Phone" formControlName="workPhone" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group-default" formGroupName="userProfileGroup">
+                <label class="control-label" for="workMobilePhone">Work Mobile Phone</label>
+                <input class="form-control" id="workMobilePhone" type="text" placeholder="Work Mobile Phone" formControlName="workMobilePhone"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="m-t-10">Organisation</h5>
+
+        <div class="form-group-attached">
+
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.roleId}">
+                <label class="control-label" for="roleId">Role*</label>
+                <select class="form-control" id="roleId" formControlName="roleId">
+                  <option value="0">Select Role (required)</option>
+                  <option *ngFor="let role of roles" [value]="role.roleId">{{role.roleName}}</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.roleId">{{displayMessage.roleId}}</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="organisationId">Organisation</label>
+                <select class="form-control" id="organisation" formControlName="organisationId">
+                  <option value="0">None</option>
+                  <option *ngFor="let org of orgs" [value]="org.organisationId">{{org.organisationName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="m-t-10">HR</h5>
+        <div class="form-group-attached" formGroupName="userProfileGroup">
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="hrEmployeeId">Employee ID</label>
+                <input type="text" class="form-control" placeholder="Employee ID" formControlName="hrStaffReferenceID" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="hrEmployeeId">Department ID</label>
+                <input type="text" class="form-control" placeholder="Department ID" formControlName="hrDepartmentReferenceID" />
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="hrEmployeeId">Cost Centre ID</label>
+                <input type="text" class="form-control" placeholder="Cost Centre ID" formControlName="hrCostCentreReferenceID" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.manager}">
+                <label class="control-label" for="hrEmployeeId">Manager</label>
+                <div class="form-control-static"><span *ngIf="!manager">None</span><span *ngIf="manager">{{manager.firstName}} {{manager.lastName}}</span>&nbsp;<span class="label label-inverse" (click)="cmdSelectManager()">Change</span>&nbsp;<span class="label label-inverse" (click)="cmdClearManager()" *ngIf="manager && manager.userId > 0">Clear</span>
+                </div>
+                <span class="help-block" *ngIf="displayMessage.manager">{{displayMessage.manager}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.userGroup}">
+                <label class="control-label">Group</label>
+                <div class="form-control-static"><span>{{userGroup && userGroup.group ? userGroup.group.name : 'None' }}</span>
+                </div>
+                <span class="help-block" *ngIf="displayMessage.manager">{{displayMessage.userGroup}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <h5 class="m-t-10">Password</h5>
+
+        <div class="form-group-attached" formGroupName="passwordGroup" [ngClass]="{'has-error': displayMessage.passwordGroup|| userForm.get('passwordGroup').errors?.invalid}">
+          <div class="form-check" *ngIf="this.user.userId > 0" style="margin-left: 40px;">
+            <input type="checkbox" class="form-check-input" id="resetPassword" formControlName="resetPassword">
+            <label class="form-check-label" for="resetPassword">Reset Password</label>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.password || userForm.get('passwordGroup').errors?.invalid}"
+                [hidden]="userForm.get('passwordGroup.resetPassword').value == false">
+                <label class="control-label" for="password">Password</label>
+                <input class="form-control" id="password" type="password" placeholder="Password" formControlName="password" />
+                <span class="help-block" *ngIf="displayMessage.password">{{displayMessage.password}}</span>
+                <span class="help-block" *ngIf="userForm.get('passwordGroup').errors?.invalid"></span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.confirmPassword}" [hidden]="userForm.get('passwordGroup.resetPassword').value == false">
+                <label class="control-label" for="confirmPassword">Confirm Password *</label>
+                <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+                />
+                <span class="help-block" *ngIf="displayMessage.confirmPassword">{{displayMessage.confirmPassword}}</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.pin}" hidden="true">
+          <label class="col-md-2 control-label" for="pin">Pin</label>
+          <div class="col-md-8">
+            <input class="form-control" id="pin" type="password" placeholder="Pin" formControlName="pin" />
+            <span class="help-block" *ngIf="displayMessage.pin">{{displayMessage.pin}}</span>
+          </div>
+        </div>
+
+
+
+        <br>
+        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Save</button>
+        <button type="button" class="btn btn-danger" *ngIf="pageTitle.indexOf('Add') == -1" (click)="cmdDelete()">Delete</button>
+        <button type="button" class="btn btn-default" (click) = "cancel()" >Cancel</button>
+      </form>
+    </div>
+  </div>
+  <!-- END card -->
+</div>

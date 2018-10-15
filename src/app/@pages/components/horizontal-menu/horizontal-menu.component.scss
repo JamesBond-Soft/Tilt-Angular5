@@ -1,0 +1,13 @@
+.horizontal-app-menu {
+    .menu-bar > ul{
+    flex-flow: row;
+    }
+    .ghost-nav-dropdown{
+        height: 0;
+    }
+    .ghost-ul{
+        visibility: hidden;
+        position: absolute;
+        pointer-events: none;
+    }
+}

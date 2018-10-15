@@ -1,0 +1,60 @@
+<div class="card card-transparent">
+  <div class="card-title">
+    <h4>Course Module Pages</h4>
+    <div class="pull-right">
+      <button type="button" class="btn btn-primary  " (click)="cmdAddCoursePage()" [hidden]="editPageOrder || showEditCard">Add Page</button>
+    </div>
+    <div class="pull-right" *ngIf="pages?.length > 0">
+      <button type="button" class="btn   btn-secondary" (click)="cmdEditPageOrder()" [hidden]="editPageOrder || showEditCard">Edit Page Order</button>
+      <button type="button" class="btn   btn-primary" (click)="cmdDoneEditPageOrder()" [hidden]="!editPageOrder">Done</button>
+    </div>
+  </div>
+  <div class="card-block">
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed" id="condensedTable">
+        <thead>
+          <tr>
+            <th>Page Type</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>{{editPageOrder? 'Order' : ''}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let page of pages let odd=odd; let even=even; let i = index;" [ngClass]="{'alternateRow': odd}" (click)="cmdEditPageContent($event, page)">
+            <td [ngClass]="{'bg-primary': selectedPage === page}">
+              <span class="badge badge-warning" *ngIf="page.coursePageContent?.templateType === 0">Manual Content</span>
+              <span class="badge badge-info" *ngIf="page.coursePageContent?.templateType === 1">Questionnaire</span>
+              <span class="badge badge-primary" *ngIf="page.coursePageContent?.templateType === 3">Content</span>
+              <i class="fa fa-arrow-right" *ngIf="selectedPage === page"></i>
+            </td>
+            <td class="v-align-middle semi-bold" [ngClass]="{'bg-primary': selectedPage === page}">{{ page.name }}</td>
+            <td [ngClass]="{'bg-primary': selectedPage === page}">Active</td>
+            <td width="20%" [ngClass]="{'bg-primary': selectedPage === page}">
+              <div class="btn-toolbar m-t-10" role="toolbar">
+                <div class="btn-group btn-group-xs" *ngIf="editPageOrder">
+                  <button type="button" class="btn btn-default" [disabled]="i === (pages.length -1)" (click)="cmdMoveOrderDown(page, $event)">
+                    <i class="fa fa-arrow-down"></i>
+                  </button>
+                  <button type="button" class="btn btn-default" [disabled]="i === 0" (click)="cmdMoveOrderUp(page, $event)">
+                    <i class="fa fa-arrow-up"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td [ngClass]="{'bg-primary': selectedPage === page}">
+              <button type="button" class="btn   btn-primary btn-sm" (click)="cmdEditCoursePage($event, page)" [hidden]="showEditCard">Edit</button>
+              <button type="button" class="btn   btn-primary btn-sm" (click)="cmdPreviewCoursePage($event, page)" [hidden]="showEditCard">Preview</button>
+          </tr>
+          <tr *ngIf="!pages || pages.length === 0">
+            <td colspan="4">
+              <h4 align="center">No current pages</h4>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+    <course-page-edit #coursePageEditComponent *ngIf="showEditCard" [showEditCard]="showEditCard" [page]="selectedPage" (onFinishEditEvent)="onFinishEditEvent($event)"></course-page-edit>
+  </div>
+</div>

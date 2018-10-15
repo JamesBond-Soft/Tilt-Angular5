@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="page-title">{{ pageTitle }}</h2>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-primary m-b-10 pull-right" *ngIf="notificationBatches?.length > 0" (click)="cmdCreateNotification()">Create Notification</button>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+          <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table" *ngIf="notificationBatches?.length > 0">
+        <thead>
+        <tr>
+          <th scope="col">Scheduled Date</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Type</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let notifBatch of notificationBatches | filterNotificationsPipe : searchString">
+          <td>{{ notifBatch.scheduledDate | date }}</td>
+          <td>{{ notifBatch.subject | truncate }}</td>
+          <td>{{ notifBatch.notificationType | genericStatusNamePipe : 'INotificationType' }}</td>
+          <td>{{ notifBatch.priority | genericStatusNamePipe : 'Priority' }}</td>
+          <td>
+            <button type="button" class="btn btn-primary  " (click)="cmdViewNotificationBatch(notifBatch, $event)">View</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="notificationBatches?.length === 0">
+        <h4 class="text-center">Create a Notification to get started</h4>
+        <br/>
+        <button type="button" class="btn btn-primary btn-block" (click)="cmdCreateNotification()">Create Notification</button>
+      </div>
+    </div>
+  </div>
+</div>

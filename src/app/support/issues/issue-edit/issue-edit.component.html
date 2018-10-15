@@ -1,0 +1,156 @@
+<div class="col-md-12">
+  <!-- START card -->
+  <form novalidate (ngSubmit)="cmdSave()" [formGroup]="issueForm">
+    <div class="card card-transparent">
+      <div class="card-block">
+        <h4 class="card-title">{{pageTitle}}</h4>
+
+        <h5>Ticket Information</h5>
+        <!-- button workflows-->
+        <div class="row" *ngIf="ticket">
+            <div class="btn-group" dropdown #statusDropdown="bs-dropdown" *ngIf="canChangeStatus">
+              <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+                Status <span class="caret"></span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" *ngFor="let item of ITicketStatusType | enumToArray">
+                  <button type="button" class="dropdown-item" [ngClass]="{'disabled font-weight-bold': ITicketStatusType[item] === ticket.status}" (click)="cmdChangeStatus($event, ITicketStatusType[item], statusDropdown)">{{ item }}</button>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group pl-3" dropdown #ticketResolutionDropdown="bs-dropdown" [hidden]="ticket.status !== ITicketStatusType.Closed" *ngIf="canChangeStatus">
+              <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+                Ticket Resolution <span class="caret"></span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem">
+                  <button type="button" class="dropdown-item" [ngClass]="{'disabled font-weight-bold': ticket.ticketResolution === null }" (click)="cmdChangeTicketResolution($event, null, ticketResolutionDropdown)">-</button>
+                </li>
+                <li role="menuitem" *ngFor="let item of ITicketResolutionType | enumToArray">
+                
+                  <button type="button" class="dropdown-item" [ngClass]="{'disabled font-weight-bold': ITicketResolutionType[item] === ticket.ticketResolution}"
+                    (click)="cmdChangeTicketResolution($event, ITicketResolutionType[item], ticketResolutionDropdown)">{{ item }}</button>
+                </li>
+              </ul>
+            </div>
+            <span class="pl-3" *ngIf="canEscalateTicket"><button type="button" class="btn btn-primary" (click)="cmdEscalateTicket()">Assign to System Administrator</button></span>
+            <span class="pl-3" *ngIf="canDeEscalateTicket"><button type="button" class="btn btn-primary" (click)="cmdDeEscalateTicket()">Assign to Administrator</button></span>
+        </div>
+        
+
+        <!-- Readonly section -->
+        <ticket-details [ticket]="ticket" [organisations]="organisations" *ngIf="ticket?.ticketId"></ticket-details>
+
+        <!-- ticket form -->
+        <div class="form-group-attached" *ngIf="!ticket?.ticketId">
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.ticketType}">
+                <label class="control-label" for="ticketType">Ticket Type *</label>
+                <select id="ticketType" class="form-control" title="ticketType" formControlName="ticketType">
+                  <option *ngFor="let item of ITicketType | enumToArray" [value]="ITicketType[item]">{{ item }}</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.status">{{displayMessage.ticketType}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix" [ngClass]="{'has-error': displayMessage.title}">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="title">Title *</label>
+                <input class="form-control" id="title" type="text" placeholder="Title (required)" formControlName="title" />
+                <span class="help-block" *ngIf="displayMessage.title">{{displayMessage.title}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="description">Description</label>
+                <input class="form-control" id="description" type="text" placeholder="Description" formControlName="description" />
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix" [ngClass]="{'has-error': displayMessage.organisationId}">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="organisationId">Organisation</label>
+                <select class="form-control" id="organisation" formControlName="organisationId">
+                  <option value="0">None</option>
+                  <option *ngFor="let org of organisations" [value]="org.organisationId">{{org.organisationName}}</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.organisationId">{{displayMessage.organisationId}}</span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.status}">
+                <label class="control-label" for="status">Status *</label>
+                <select id="status" class="form-control" title="status" formControlName="status">
+                  <option *ngFor="let item of ITicketStatusType | enumToArray" [value]="ITicketStatusType[item]">{{ item }}</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.status">{{displayMessage.status}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.ticketResolution}">
+                <label class="control-label" for="ticketResolution">Ticket Resolution</label>
+                <select id="ticketResolution" class="form-control" title="ticketResolution" formControlName="ticketResolution">
+                  <option></option>
+                  <option *ngFor="let item of ITicketResolutionType | enumToArray" [value]="ITicketResolutionType[item]">{{ item }}</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.ticketResolution">{{displayMessage.ticketResolution}}</span>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+        <br />
+        <!-- activity form -->
+        <div class="form-group-attached">
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="card padding-0">
+                <div class="card-body">
+                  <h5 class="card-title">Activity</h5>
+                  <div style="overflow: auto; max-height: 300px">
+                    <div *ngFor="let ticketNote of ticket?.ticketNotes">
+                      <div>{{ticketNote.createdByUserDisplayName}} added a note on {{ticketNote?.createdDate | date : 'dd-MMM-yyy
+                        h:mm:ss aaa' }}
+                        <b class="badge badge-warning" *ngIf="!ticketNote.ticketNoteId"> Pending Save</b>
+                      </div>
+                      <div>{{ticketNote.comment}}</div>
+                      <hr />
+                    </div>
+                  </div>
+                  <h5>Add Note</h5>
+                  <div class="form-group-attached" [formGroup]="issueForm.get('ticketNotesForm')">
+                    <div class="row clearfix" [ngClass]="{'has-error': displayMessage.comment}">
+                      <div class="col-md-12">
+                        <div class="form-group form-group-default">
+                          <label class="control-label" for="comment">Comment *</label>
+                          <textarea class="form-control" id="comment" type="text" placeholder="Comment (required)" formControlName="comment" style="min-height: 100px"></textarea>
+                          <span class="help-block" *ngIf="displayMessage.comment">{{displayMessage.comment}}</span>
+                          <button type="button" class="btn btn-primary  " [disabled]="!issueForm.get('ticketNotesForm').get('comment').value"
+                            (click)="cmdAddTicketNote()">Add Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END card -->
+    <button type="submit" class="btn   btn-primary" [disabled]="!issueForm.valid">Save</button>
+    <!-- <button type="button" class="btn   btn-danger" *ngIf="pageTitle?.indexOf('Add') == -1" (click)="cmdDelete()">Delete</button> -->
+    <button type="button" class="btn   btn-default" (click)="cmdCancel()">Cancel</button>
+  </form>
+</div>
+<br>

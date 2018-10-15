@@ -1,0 +1,53 @@
+  
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="page-title">My Notifications</h2>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+  
+  <div class="card" *ngIf="notifications?.length > 0; else emptyCase">
+    <div class="card-body" >
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+            <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive">
+          <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Subject</th>
+                <th scope="col">Time</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let notification of notifications | filterMyNotificationsPipe : searchString" (click)="cmdViewNotification(notification, $event)">
+                <td> <span class="badge " [ngClass]="notification.priority > 3 ? 'badge-danger' : 'badge-success'" *ngIf="!notification.read"> </span></td>
+                <td [ngClass]="{'bold' : !notification.read}">{{notification.subject}}</td>
+                <td>{{ notification.sentDate | timeAgo }}</td>
+              </tr>
+              </tbody>
+            </table>
+      </div>
+    </div>
+  </div>  
+
+  <ng-template #emptyCase >
+      <div class="card">
+      <div class="card-body">
+            <div class="text-center">
+            <h3>No Notifications</h3>
+        </div>
+    </div>
+      </div>
+  </ng-template>
+
+  

@@ -1,0 +1,98 @@
+<div class="col-md-12">
+  <!-- START card -->
+  <form novalidate (ngSubmit)="cmdSave()" [formGroup]="reportForm">
+
+    <div class="card card-transparent">
+      <div class="card-block">
+        <h4 class="card-title">{{pageTitle}}</h4>
+
+        <h5>Report Information</h5>
+        <div class="form-group-attached">
+          <div class="row clearfix" [ngClass]="{'has-error': displayMessage.name}">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="name">Name *</label>
+                <input class="form-control" id="name" type="text" placeholder="Name (required)" formControlName="name" />
+                <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="description">Description</label>
+                <input class="form-control" id="description" type="text" placeholder="Description" formControlName="description" />
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <label class="control-label" for="extRefReportNum">Ext Ref Report ID</label>
+                <input class="form-control" id="extRefReportNum" type="text" placeholder="Ext. Ref Report ID" formControlName="extRefReportNum"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.organisations}">
+                <label class="control-label" for="cboOrganisation">Organisation(s) *</label>
+                <div formArrayName="organisations" class="form-check" *ngFor="let org of organisations; let i=index;">
+                  <input type="checkbox" class="form-check-input" [attr.id]="'orgCheckbox' + org.organisationId" [formControlName]="i">
+                  <label class="form-check-label" [for]="'orgCheckbox' + org.organisationId">{{org.organisationName}}</label>
+                </div>
+                <span class="help-block" *ngIf="displayMessage.organisations">{{displayMessage.organisations}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.status}">
+                <label class="control-label" for="status">Status *</label>
+                <select id="status" class="form-control" name="status" formControlName="status">
+                  <option [value]="IExportReportStatusType.Pending">Pending</option>
+                  <option [value]="IExportReportStatusType.Active">Active</option>
+                  <option [value]="IExportReportStatusType.Archived">Archived</option>
+                </select>
+                <span class="help-block" *ngIf="displayMessage.status">{{displayMessage.status}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9">
+                <h5>Report Columns</h5>
+              </div>
+              <div class="col-3">
+                <button type="button" class="btn   btn-primary btn-sm pull-right" (click)="cmdPreview($event)" [disabled]="!exportReport.exportReportColumns.length || reportForm.get('organisations').invalid">Preview Report</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <export-report-builder-columns-list [exportReport]="exportReport" (onItemSelected)="onColumnItemSelectedEventHandler($event)" [selectedExportReportColumn]="selectedExportReportColumn" (onFinishOrder)="onFinishOrderHandler()"></export-report-builder-columns-list>
+                </div>
+                <div class="col-6">
+                  <export-report-builder-edit-column *ngIf="showEditColumnSection" [exportReportColumn]="selectedExportReportColumn" (onFinishEditEvent)="onFinishEditEventHandler($event)" (onDeleteEvent)="onDeleteEventHandler($event)"></export-report-builder-edit-column>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END card -->
+    <button type="submit" class="btn   btn-primary" [disabled]="!reportForm.valid">Save</button>
+    <button type="button" class="btn   btn-danger" *ngIf="pageTitle.indexOf('Add') == -1" (click)="cmdDelete()">Delete</button>
+    <button type="button" class="btn   btn-default" (click)="cmdCancel()">Cancel</button>
+  </form>
+</div>
+<br>
+<preview-report-dialog #previewReportDialogComponent></preview-report-dialog>

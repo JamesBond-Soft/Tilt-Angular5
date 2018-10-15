@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cmdClose()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-sm table-responsive">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let asset of resourceLibraryAssets">
+                        <td>{{asset.name}}</td>
+                        <td>{{asset.description}}</td>
+                        <td><button type="button" class="btn btn-primary  " (click)="cmdSelectVideo(asset)">Select</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!-- START ROW -->
+<div class="row">
+    <div class="col-lg-3 col-sm-6  d-flex flex-column" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+      <staff-admin-widget></staff-admin-widget>
+    </div>
+    <div class="col-lg-3 col-sm-6  d-flex flex-column" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+     <courses-admin-widget></courses-admin-widget >
+     </div>
+    <div class="col-lg-3 m-b-6 d-flex" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+     <completed-courses-admin-widget></completed-courses-admin-widget>
+    </div>
+    <div class="col-lg-3 m-b-6 d-flex" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+      <noncompliance-admin-widget></noncompliance-admin-widget>
+    </div>
+    <div class="col-lg-3 m-b-6 d-flex" *ngIf="userRole === RoleType.Admin || canShowSelfAssessmentValidation">
+      <self-assessment-admin-widget></self-assessment-admin-widget>
+    </div>
+    <div class="col-lg-3 m-b-6 d-flex" *ngIf="userRole === RoleType.Staff">
+        <my-courses-staff-widget></my-courses-staff-widget>
+      </div>
+  </div>
+  <!-- END ROW -->

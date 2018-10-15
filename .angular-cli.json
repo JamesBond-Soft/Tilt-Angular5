@@ -1,0 +1,96 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "tilt-suite"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "app/@pages/styles","scss"
+        ]
+      },
+      "styles": [
+        "styles.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "assets/plugins/font-awesome/css/font-awesome.min.css",
+        "assets/plugins/codrops-stepsform/css/component.css",
+        "assets/tilt_ui/scss/tilt.scss",
+        "assets/tilt_ui/css/tilt-icons.css",
+        "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+        "../node_modules/videogular2/fonts/videogular.css",
+        "../node_modules/dragula/dist/dragula.min.css",
+        "assets/tilt_ui/scss/grapes/styles/scss/main.scss"
+      ],
+      "scripts": [
+        "assets/tilt_ui/js/tilt.js",
+        "../node_modules/hls.js/dist/hls.min.js",
+
+        "assets/plugins/modernizr.custom.js",
+        "assets/plugins/codrops-stepsform/js/classie.js",
+        "assets/plugins/codrops-stepsform/js/stepsForm.js",
+        "assets/plugins/skycons/skycons.js",
+
+         "../node_modules/grapesjs/dist/grapes.min.js",
+        "../node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js",
+        "../node_modules/grapesjs-blocks-flexbox/dist/grapesjs-blocks-flexbox.min.js",
+        "../node_modules/grapesjs-tabs/dist/grapesjs-tabs.min.js",
+        "../node_modules/grapesjs-lory-slider/dist/grapesjs-lory-slider.min.js",
+        "../node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js",
+        "assets/plugins/grapesjs/grapesjs-tiltsuite/dist/grapesjs-tiltsuite.min.js",
+        "assets/js/webrtc_adaptor.js",
+        "assets/js/adapter-latest.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "devsrv": "environments/environment.devsrv.ts",
+        "staging": "environments/environment.staging.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {
+
+    }
+  }
+}

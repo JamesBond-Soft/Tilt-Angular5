@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-12">
+      <basket-selector #groupBasketSelector shelfTitle="Available Groups" basketTitle="Selected Groups" dataBranchField="subGroups" displayField="name" (isDirty)="basketSelectorIsDirtyEventHandler($event)"></basket-selector>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-6">
+        <button type="button" class="btn btn-default" (click)="cmdBack()">Back</button>
+    </div>
+    <div class="col-6">
+      <div class="pull-right">
+        <button type="button" class="btn btn-primary" [disabled]="!this.groupBasketSelector.basketItems?.length"
+          (click)="cmdSaveStaffGroupAssignments()">Save Changes</button>
+      </div>
+    </div>
+  </div>

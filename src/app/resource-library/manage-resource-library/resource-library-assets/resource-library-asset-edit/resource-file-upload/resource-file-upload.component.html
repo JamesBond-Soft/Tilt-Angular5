@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">File Upload</h5>
+    <div class="row">
+      <div class="col-12">
+        <input type="file" ng2FileSelect [uploader]="uploader" #uploadControl />
+        <div class="font-weight-light">(Note Max 4GB)</div>
+        <div class="alert alert-danger" [hidden]="!invalidFile">Invalid File!</div>
+      </div>
+    </div>
+    <div class="row" *ngIf="fileUploadItem">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success" *ngIf="uploadStatus === 1"><span class="fa fa-check-square"></span> Upload Successful</div>
+            <div class="alert alert-danger" *ngIf="uploadStatus === 2"><span class="fa fa-warning"></span> Upload Failed</div>
+            <div class="alert alert-danger" *ngIf="uploadStatus === 3"><span class="fa fa-warning"></span> Upload Failed - Unauthenticated</div>
+        </div>
+    </div>
+  </div>
+</div>

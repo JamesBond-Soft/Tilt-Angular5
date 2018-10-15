@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cmdCancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card card-transparent">
+        <div class="card-block">
+            <form novalidate (ngSubmit)="cmdSave()" [formGroup]="pageForm">
+                <div class="form-group-attached">
+                    <div class="row clearfix" [ngClass]="{'has-error': displayMessage.name}">
+                        <div class="col-md-12">
+                            <div class="form-group form-group-default">
+                                <label class="control-label" for="name">Name *</label>
+                                <input class="form-control" id="name" type="text" placeholder="Name (required)" formControlName="name" />
+                                <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-attached">
+                    <div class="row clearfix" [ngClass]="{'has-error': displayMessage.pageType}">
+                        <div class="col-md-12">
+                            <div class="form-group form-group-default">
+                                <label class="control-label" for="pageType">Page Type *</label>
+                                <select id="pageType" class="form-control" formControlName="pageType">
+                                    <option value="3">Content</option>
+                                    <option value="1">Questionaire</option>
+                                    <option value="0">Manual Content</option>
+                                </select>
+                                <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.pageType}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn   btn-primary" [disabled]="!pageForm.valid">Save</button>
+                <button type="button" class="btn   btn-danger" *ngIf="page?.coursePageId" (click)="cmdDelete()">Delete</button>
+                <button type="button" class="btn   btn-default" (click)="cmdCancel()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

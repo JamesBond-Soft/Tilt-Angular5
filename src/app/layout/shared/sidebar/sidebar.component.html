@@ -1,0 +1,319 @@
+<!-- BEGIN SIDEBAR MENU TOP TRAY CONTENT-->
+<div class="sidebar-overlay-slide from-top" id="appMenu">
+
+</div>
+<!-- END SIDEBAR MENU TOP TRAY CONTENT-->
+<!-- BEGIN SIDEBAR MENU HEADER-->
+<div class="sidebar-header">
+  <img src="assets/img/logo_white_2x.png" alt="logo" class="brand" data-src="assets/img/logo_white_2x.png" data-src-retina="assets/img/logo_white_2x.png"
+       width="100">
+  <div class="sidebar-header-controls">
+      <button type="button" class="btn btn-link hidden-md-down" data-toggle-pin="sidebar" (click)="toggleMenuPin()">
+        <i class="fa fs-12"></i>
+      </button>
+  </div>
+  <img src="assets/img/sidebar-logo.png" alt="logo" class="sidebar_logo" data-src="assets/img/sidebar-logo.png" data-src-retina="assets/img/sidebar-logo.png"
+  width="40">
+ 
+
+    
+  
+</div>
+<!-- END SIDEBAR MENU HEADER-->
+<!-- START SIDEBAR MENU -->
+<div class="sidebar-menu">
+  <!-- BEGIN SIDEBAR MENU ITEMS-->
+  <ul class="menu-items">
+    <!-- for testing only -->
+      <!-- <li class="m-t-30">
+          <a [routerLink]="['/contentcreator']" routerLinkActive="active">
+            <span class="title">Content Creator</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-ambulance"></i>
+            </span>
+          </a>
+        </li> -->
+    <li class="m-t-30">
+      <a [routerLink]="['/dashboard']" routerLinkActive="active">
+        <span class="title">Dashboard</span>
+        <span class="icon-thumbnail">
+          <i class="pg pg-home"></i>
+        </span>
+      </a>
+    
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Admin">
+      <a [routerLink]="['/staff']" routerLinkActive="active">
+        <span class="title">Staff</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-users"></i>
+        </span>
+      </a>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Staff && IsSelfAssessmentReportRequired">
+      <a [routerLink]="['/selfassessments/questionaire']" routerLinkActive="active">
+        <span class="title">Self-Assessment</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-users"></i>
+        </span>
+      </a>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Staff">
+      <a [routerLink]="['/training/my-courses']" routerLinkActive="active">
+        <span class="title">My Courses</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-bullhorn"></i>
+        </span>
+      </a>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Staff">
+      <a [routerLink]="['/training/history']" routerLinkActive="active">
+        <span class="title">Training History</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-history"></i>
+        </span>
+      </a>
+    </li>
+    <li *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+      <a [routerLink]="['/courses/manage']" routerLinkActive="active">
+        <span class="title">Courses</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-bullhorn"></i>
+        </span>
+      </a>
+    </li>
+    <li *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+      <a [routerLink]="['/resourcelibrary']" routerLinkActive="active">
+        <span class="title">Resources</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-cubes"></i>
+        </span>
+      </a>
+    </li>
+    <li class="m-t-5" *ngIf="userRole === RoleType.Staff">
+      <a [routerLink]="['/resources']" routerLinkActive="active">
+        <span class="title">Resources</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-book"></i>
+        </span>
+      </a>
+    </li>
+    <li class="m-t-5" *ngIf="userRole === RoleType.Sysadmin || userRole === RoleType.Admin || userRole === RoleType.Staff">
+      <a href="javascript:;">
+        <div class="title">
+          <span class="sub_title">Webinar</span>
+          <span class="arrow"></span>
+        </div>
+        <span class="icon-thumbnail">
+          <i class="fa fa-book"></i>
+        </span>
+      </a>
+      <ul class="sub-menu">
+        <li class="">
+          <a [routerLink]="['/webinar/list']" routerLinkActive="active">
+            <span class="title">Webinar List</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-users"></i>
+            </span>
+          </a>
+        </li>
+      <!--   <li class="" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/webinar/detail']" routerLinkActive="active">
+            <span class="title">Webinar Details</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-users"></i>
+            </span>
+          </a>
+        </li> -->
+      <!--   <li class="" >
+          <a [routerLink]="['/webinar/view']" routerLinkActive="active">
+            <span class="title">Webinar View</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-users"></i>
+            </span>
+          </a>
+        </li> -->
+        <li class="" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/webinar/new-broadcast/0']" routerLinkActive="active">
+            <span class="title">New Broadcast</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-users"></i>
+            </span>
+          </a>
+        </li>
+       <!--  <li class="" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/webinar/broadcast']" routerLinkActive="active">
+            <span class="title">Broadcast</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-users"></i>
+            </span>
+          </a>
+        </li> -->
+      </ul>
+    </li>
+    <li class="m-t-5" *ngIf="userRole === RoleType.Sysadmin">
+      <a href="javascript:;">
+        <span class="title">Reporting</span>
+        <span class="arrow"></span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-table"></i>
+        </span>
+      </a>
+    
+
+      <ul class="sub-menu">
+        <li class="" *ngIf="userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/reporting/export-report-builder']" routerLinkActive="active">
+            <span class="title">Export Report Builder</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-hand-spock-o"></i>
+            </span>
+          </a>
+        </li>
+        <li class="" *ngIf="userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/reporting/completed-courses']" routerLinkActive="active">
+            <span class="title">Completed Courses</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-hand-spock-o"></i>
+            </span>
+          </a>
+        </li>
+        <li class="" *ngIf="userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/reporting/noncompliance-courses']" routerLinkActive="active">
+            <span class="title">Non Compliance</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-hand-spock-o"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="m-t-5" *ngIf="userRole === RoleType.Admin || userRole === RoleType.Sysadmin">
+      <a href="javascript:;">
+        <div class="title">
+            <span class="sub_title">Settings</span>
+            <span class="arrow"></span>
+        </div>
+        <span class="icon-thumbnail">
+          <i class="pg pg-settings"></i>
+        </span>
+      </a>
+      <ul class="sub-menu">
+        <li class="">
+          <a [routerLink]="['/settings/users']" routerLinkActive="active">
+            <span class="title">Users</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-users"></i>
+            </span>
+          </a>
+        </li>
+        <li class="" *ngIf="userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/settings/organisations']" routerLinkActive="active">
+            <span class="title">Organisations</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-sitemap"></i>
+            </span>
+          </a>
+        </li>
+        <li class="">
+          <a [routerLink]="['/groups']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <span class="title">Groups</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-object-group"></i>
+            </span>
+          </a>
+        </li>
+        <li class="">
+          <a [routerLink]="['/selfassessments/questionaire/builder']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <span class="title">Self Questionaire Builder</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-list"></i>
+            </span>
+          </a>
+        </li>
+        <li class="">
+          <a [routerLink]="['/courses/categories']" routerLinkActive="active">
+            <span class="title">Course Categories</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-sitemap"></i>
+            </span>
+          </a>
+        </li>
+        <li class="">
+          <a [routerLink]="['/courses/templates']" routerLinkActive="active">
+            <span class="title">Course Templates</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-sitemap"></i>
+            </span>
+          </a>
+        </li>
+        <li class="">
+          <a [routerLink]="['/resourcelibrary/categories']" routerLinkActive="active">
+            <span class="title">Resource Categories</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-cubes"></i>
+            </span>
+          </a>
+        </li>
+        <li class="" *ngIf="userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/settings/moodle-import']" routerLinkActive="active">
+            <span class="title">Moodle Import</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-university"></i>
+            </span>
+          </a>
+        </li>
+        <li class="" *ngIf="userRole === RoleType.Sysadmin">
+          <a [routerLink]="['/settings/configuration']" routerLinkActive="active">
+            <span class="title">Configuration</span>
+            <span class="icon-thumbnail">
+              <i class="fa fa-wrench"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Staff || userRole === RoleType.Admin">
+        <a [routerLink]="['/notifications']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+          <span class="title">My Notifications</span>
+          <span class="icon-thumbnail">
+            <i class="fa fa-envelope-o"></i>
+          </span>
+        </a>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Admin">
+      <a [routerLink]="['/notifications/manage']" routerLinkActive="active">
+        <span class="title">Notifications</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-feed"></i>
+        </span>
+      </a>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Sysadmin || userRole === RoleType.Admin">
+      <a [routerLink]="['/support/issues']" routerLinkActive="active">
+        <span class="title">Support</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-life-ring"></i>
+        </span>
+      </a>
+    </li>
+    <li class="" *ngIf="userRole === RoleType.Staff">
+      <a [routerLink]="['/support/issues/0']" routerLinkActive="active">
+        <span class="title">Support</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-life-ring"></i>
+        </span>
+      </a>
+    </li>
+    <li class="m-t-5">
+      <a [routerLink]="['/support/feedback']" routerLinkActive="active">
+        <span class="title">Feedback</span>
+        <span class="icon-thumbnail">
+          <i class="fa fa-comment-o"></i>
+        </span>
+      </a>
+    </li>
+  </ul>
+  <div class="clearfix"></div>
+</div>
+<!-- END SIDEBAR MENU -->

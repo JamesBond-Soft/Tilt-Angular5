@@ -1,0 +1,18 @@
+<div class="card" *ngIf="fileProperties">
+  <div class="card-body">
+    <h5 class="card-title">File Details</h5>
+    <div class="row">
+      <div class="col-4"><label class="control-label">File Name</label></div>
+      <div class="col-8">{{fileProperties.fileName}}</div>
+    </div>
+    <div class="row">
+      <div class="col-4"><label class="control-label">File Extension</label></div>
+      <div class="col-8">{{fileProperties.fileExtension}}</div>
+    </div>
+    <div class="row">
+        <div class="col-4"><label class="control-label">File URL</label></div>
+        <div class="col-8"><a [href]="fileProperties.url" target="_blank">{{fileProperties.url}}</a></div>
+      </div>
+  </div>
+</div>
+

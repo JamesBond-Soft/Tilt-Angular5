@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Select Course Prerequisites</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <div class="row">
+    <div class="col-6">
+      <h5>Available Courses</h5>
+      <div class="card padding-20" style="max-height: 775px;overflow-y: scroll;">
+        <div class="card-block">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </div>
+                  <input type="text" class="form-control" name="txtSearchString" (keyup)="cmdSearchCourse($event)" placeholder="Type to search...">
+                </div>
+              </div>
+            <div class="card-block" [hidden]="availableCourses && availableCourses.length">
+                <h5 align="center">Nothing to Select</h5>
+            </div>
+            <div class="table-responsive" [hidden]="(!availableCourses || !availableCourses?.length)">
+              <table class="table table-hover table-condensed" id="condensedTable">
+                <thead>
+                  <tr>
+                    <th style="text-align: left !important">Name</th>
+                    <th>Ext Ref Num</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let course of availableCourses">
+                    <td align="left">{{course.name}}</td>
+                    <td>{{course.extRefCourseNum}}</td>                   
+                    <td>
+                        <button type="button" class="btn btn-info pull-right" (click)="cmdAddCurrentPrerequisiteItem(course)">
+                          <i class="fa fa-plus"></i>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+        <h5>Prerequisite Courses</h5>
+        <div class="card padding-20" style="max-height: 775px;overflow-y: scroll;">
+          <div class="card-block">
+              <div class="table-responsive" [hidden]="(!currentPrerequisites || !currentPrerequisites?.length)">
+                  <table class="table table-hover table-condensed"  id="condensedTable">
+                    <thead>
+                      <tr>
+                        <th style="text-align: left !important">Name</th>
+                        <th>Ext Ref Num</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let coursePreq of currentPrerequisites" (click)="cmdSelectSingleCurrentPrerequisiteItem(coursePreq)">
+                        <td align="left">{{coursePreq.name}}</td>
+                        <td>{{coursePreq.extRefCourseNum}}</td>                        
+                        <td>
+                            <button type="button" class="btn btn-info pull-right" (click)="cmdRemoveCurrentPrerequisiteItem(coursePreq)">
+                              <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="padding-20">
+      <button type="button" class="btn   btn-primary" (click)="cmdSave()" style="margin-right: 4px;" >Save</button>
+      <button type="button" class="btn   btn-default" (click)="cmdCancel()">Cancel</button>
+    </div>
+  </div>
+  <br>
+</div>

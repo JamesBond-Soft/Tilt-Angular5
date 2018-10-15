@@ -1,0 +1,90 @@
+<div class="card padding-20">
+    <div class="card-body" [formGroup]="contentQuestionForm">
+        <div class="row">
+            <div class="col-6">
+                <h4>{{pageTitle}}</h4>
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-info pull-right" (click)="cmdCancelEditPageContentQuestion()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.question}">
+                    <label class="control-label" for="question">Question *</label>
+                    <input type="text" id="question" class="form-control" placeholder="Question (required)" formControlName="question" />
+                    <span class="help-block" *ngIf="displayMessage.question">{{displayMessage.question}}</span>
+                </div>
+                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.questionType}">
+                    <label class="control-label" for="questionType">Question Type *</label>
+                    <select class="form-control" id="questionType" formControlName="questionType">
+                        <option value="0">Single-Choice</option>
+                        <option value="1">Multi-Choice</option>
+                        <option value="2">Written Answer</option>
+                    </select>
+                    <span class="help-block" *ngIf="displayMessage.questionType">{{displayMessage.questionType}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-condensed" id="condensedTable">
+                <thead>
+                    <th class="w-50">Response</th>
+                    <th class="w-25">Correct Value</th>
+                    <th class="w-25"> </th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let responseItem of coursePageContentQuestion.coursePageContentQuestionResponses" (click)="cmdSelectResponse(responseItem)">
+                        <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':responseItem === selectedResponseItem}">{{responseItem.response}}</td>
+                        <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':responseItem === selectedResponseItem}">{{responseItem.correctValue | percent}}</td>
+                        <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':responseItem === selectedResponseItem}">
+                            <button type="button" class="btn btn-danger btn-xs pull-right" (click)="cmdRemoveResponse(responseItem, $event)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+
+            <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddResponse()">Add Response</button>
+
+
+            <hr>
+
+
+            <div class="padding-10" *ngIf="showEditResponseSection" formGroupName="responseGroup">
+                <h4>New Response</h4>
+
+                <div class="form-group-attached">
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.response}">
+                                <label class="control-label" for="response">Response *</label>
+                                <input type="text" id="response" class="form-control" placeholder="Response (required)" formControlName="response" />
+                                <span class="help-block text-danger" *ngIf="displayMessage.response">{{displayMessage.response}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.correctValue}">
+                                <label class="control-label" for="response">Correct Value % *</label>
+                                <input type="number" min="0" max="100" step="25" id="correctValue" class="form-control" placeholder="Correct Value % (required)" formControlName="correctValue" />
+                                <span class="help-block text-danger" *ngIf="displayMessage.correctValue">{{displayMessage.correctValue}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <button type="button" class="btn btn-primary   pull-right" [disabled]="!contentQuestionForm.get('responseGroup').valid" (click)="cmdSaveResponse()">{{selectedResponseItem.coursePageContentQuestionResponseId ? 'Save' : 'Add'}}</button>
+                <button type="button" class="btn btn-default   pull-right" (click)="cmdCancelEditResponse()">Cancel</button>
+                <br/>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="btn btn-primary  " (click)="cmdSavePageContentQuestion()">Save</button>
+        <button type="button" class="btn btn-danger  " (click)="cmdDeletePageContentQuestion()" *ngIf="coursePageContentQuestion.coursePageContentQuestionId > 0">Delete</button>
+        <button type="button" class="btn btn-default  " (click)="cmdCancelEditPageContentQuestion()">Cancel</button>
+    </div>
+</div>

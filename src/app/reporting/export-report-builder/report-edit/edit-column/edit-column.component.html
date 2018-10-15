@@ -1,0 +1,41 @@
+<div class="card padding-20">
+    <div class="card-body" [formGroup]="reportColumnForm">
+        <div class="row">
+            <div class="col-6">
+                <h4>{{pageTitle}}</h4>
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-info pull-right" (click)="cmdCancelReportColumn()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.name}">
+                    <label class="control-label" for="name">Name *</label>
+                    <input type="text" id="name" class="form-control" placeholder="Name (required)" formControlName="name" />
+                    <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+                </div>
+                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.dataTable}">
+                    <label class="control-label" for="dataTable">Data Table *</label>
+                    <select class="form-control" id="dataTable" formControlName="dataTable">
+                      <option *ngFor="let columnMapping of columnMappings" [value]="columnMapping.tableName">{{columnMapping.tableName}}</option>
+                    </select>
+                    <span class="help-block" *ngIf="displayMessage.dataTable">{{displayMessage.dataTable}}</span>
+                </div>
+                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.dataColumn}">
+                    <label class="control-label" for="dataColumn">Data Member *</label>
+                    <select class="form-control" id="dataColumn" formControlName="dataColumn">
+                      <option *ngFor="let dataColumn of columnMappings | dataColumnFilterPipe:reportColumnForm.get('dataTable').value">{{dataColumn}}</option>
+                    </select>
+                    <span class="help-block" *ngIf="displayMessage.dataColumn">{{displayMessage.dataColumn}}</span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="btn btn-primary  " (click)="cmdSaveReportColumn()" [disabled]="!reportColumnForm.valid">Save</button>
+        <button type="button" class="btn btn-danger  " (click)="cmdDeleteReportColumn()" *ngIf="exportReportColumn?.exportReportColumnId > 0">Delete</button>
+        <button type="button" class="btn btn-default  " (click)="cmdCancelReportColumn()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+@import "core.scss";
+.ngx-datatable {
+  &.scroll-vertical{
+    height: 100%;
+  }
+  &.table-stripped{
+    .datatable-body {
+      .datatable-body-row.datatable-row-even {
+        .datatable-body-cell{
+          background: $body-background
+        }
+      }
+    }
+  }
+  &.table-hover{
+    .datatable-body {
+      .datatable-body-row {
+          &:hover{
+            .datatable-body-cell{
+              background: $color-complete-lighter !important;
+            }
+          }
+          &.active{
+            .datatable-body-cell{
+              background: $color-complete-lighter !important;
+            }
+          }
+        }
+      }
+    }
+    box-shadow: none;
+    font-size: 13px;
+    .datatable-header {
+      height: unset !important;
+      .datatable-header-cell {
+        padding: .75rem;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-family: montserrat;
+        font-size: 10.5px;
+        letter-spacing: .06em;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        vertical-align: middle;
+        color:fade-out($color-master-dark, .65);
+        border-top: 0;
+        border-bottom: 1px solid rgba(230,230,230,.7);
+        .datatable-header-cell-template-wrap{
+          position: relative;
+        }
+        &.sort-active{
+          color:$color-master-dark;
+        }
+        .sort-btn{
+          display: block;
+          cursor: pointer;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          color:fade-out($color-master-dark, .65);
+          &:before {
+            font: normal normal normal 14px/1 pages-icon;
+            content: "\e62c";
+            position: absolute;
+            right: 0;
+            font-size: 12px;
+          }
+          &:after {
+            font: normal normal normal 14px/1 pages-icon;
+            content: "\e630";
+            position: absolute;
+            right: 0;
+            top: 7px;
+            font-size: 12px;
+          }
+          &.datatable-icon-up{
+              &:before {
+              color:$color-master-dark;
+              }
+              &:after{
+                display: none
+              }
+          }
+          &.datatable-icon-down{
+              &:before {
+                display: none;
+              }
+              &:after{
+                color:$color-master-dark;
+              }
+          }
+        }
+        .datatable-header-cell-label {
+          line-height: 24px;
+        }
+      }
+    }
+    .datatable-body {
+      .datatable-row-wrapper:first-child .datatable-body-row{
+        border-top:0;
+      }
+      .datatable-body-row {
+        vertical-align: top;
+        border-top: 1px solid rgba(230,230,230,.7);
+        &.active {
+          background-color: #1483ff;
+          color: #FFF;
+        }
+        .datatable-body-cell {
+          text-align: left;
+          vertical-align: top;
+          padding: 20px;
+          font-size: 13.5px;
+          background: #fff;
+        }
+      }
+    }
+    .datatable-footer {
+      color: $color-master;
+      font-size: 12px;
+      margin-top: -1px;
+      .page-count {
+        line-height: 50px;
+        height: 50px;
+        padding: 0 1.2rem;
+      }
+      .datatable-pager {
+        margin: 0 10px;
+        vertical-align: top;
+        ul {
+          padding: 5px 10px;
+          @include transition(opacity .3s ease);
+          li {
+            &:not(.disabled) {
+              &.active{
+                a {
+                opacity: 1;
+                font-weight: bold;
+                }
+              }
+              &:hover {
+                a {
+                  opacity: .65;
+                }
+              }
+            }
+          }
+        }
+        a {
+          height: 22px;
+          min-width: 26px;
+          line-height: 22px;
+          color: $color-master;
+          opacity: .35;
+          text-align: center;
+          font-size: 11px;
+        }
+        .datatable-icon-left:before{
+          content: "\e629";
+          top: 2px;
+          position: relative;
+        }
+        .datatable-icon-right:before{
+          content: "\e631";
+          top: 2px;
+          position: relative;
+        }
+        .datatable-icon-left,
+        .datatable-icon-skip,
+        .datatable-icon-right,
+        .datatable-icon-prev {
+          font: normal normal normal 14px/1 pages-icon;
+          font-size: 12px;
+          line-height: 27px;
+          padding: 0 3px;
+          
+        }
+      }
+    }
+  }
+

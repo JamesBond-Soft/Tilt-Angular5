@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Import Users</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+ 
+  <div style="display: block; text-align: left; width: 100%;">
+    <p style="text-align: left;">Select File (.CSV) to import</p>
+    <div class="card padding-20" style="max-height: 775px;overflow-y: scroll;">
+      <div class="card-block">
+        <div>
+          <input type='file' accept=".csv" (change)="fileChanged($event)" style="margin-bottom: 8px;border: 1px dashed;padding: 8px;width: 100%; cursor: pointer;">
+        </div>
+        <div>
+          <button type="button" class="btn   btn-primary m-b-10 pull-right" style="margin-left: 4px;" (click)="cmdImportUser()"><span class="glyphicon glyphicon-plus"></span> Import User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>My Courses</h2>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+    <table class="table" *ngIf="courseAssignmentInfos?.length > 0">
+      <thead>
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Pre-Requisite Course</th>
+          <th scope="col">Source</th>
+          <th scope="col">Progress</th>
+          <th scope="col">Status</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let courseAssignmentInfo of courseAssignmentInfos | filterMyCoursesPipe : searchString">
+          <td>{{courseAssignmentInfo.course.name}}</td>
+          <td>
+            <span [ngStyle]="{'color': preq.isCompleted ? 'green' : 'red'}" *ngFor="let preq of courseAssignmentInfo.prerequisiteCourses; let isLast=last">
+                  {{preq.name}}
+                  <span style="color:#626262;" >
+                    {{isLast ? '' : ', '}}
+                  </span>
+            </span>
+              <span *ngIf="!courseAssignmentInfo.prerequisiteCourses || !courseAssignmentInfo.prerequisiteCourses.length">None</span>
+          </td>
+          <td>
+            {{courseAssignmentInfo.source}}
+          </td>
+          <td>
+            <span>{{courseAssignmentInfo.courseSession ? courseAssignmentInfo.courseSession.courseProgress + '%' : '0%' }}</span>
+            <div class="progress" style="height: 5px;">
+              <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width': courseAssignmentInfo.courseSession ? courseAssignmentInfo.courseSession.courseProgress + '%' : '0%' }">                
+              </div>
+            </div>
+          </td>
+          <td><div class="badge">{{courseAssignmentInfo.courseSession ? (courseAssignmentInfo.courseSession.status | courseSessionStatusNamePipe) : 'Not Started'}}</div></td>
+          <td>{{courseAssignmentInfo.dueDate | date}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" [ngStyle]="{ 'cursor': checkBeginPrerequisite(courseAssignmentInfo.prerequisiteCourses) ? 'not-allowed': 'pointer'}"  [disabled]="checkBeginPrerequisite(courseAssignmentInfo.prerequisiteCourses)" (click)="cmdOpenCourse(courseAssignmentInfo, $event)" *ngIf="!courseAssignmentInfo.courseSession || (courseAssignmentInfo.courseSession && (courseAssignmentInfo.courseSession.status === ICourseSessionStatusType.NotStarted || courseAssignmentInfo.courseSession.status === ICourseSessionStatusType.Underway))">Begin</button>
+            <button type="button" class="btn btn-primary" (click)="cmdOpenCourseHistory(courseAssignmentInfo, $event)" *ngIf="courseAssignmentInfo.courseSession && courseAssignmentInfo.courseSession.status === ICourseSessionStatusType.Completed">View History</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="courseAssignmentInfos?.length === 0">
+      <h4>You are all up to date! No new assigned courses.</h4><br />
+      <button type="button" class="btn btn-primary" [routerLink]="['/training','history']">View Training History</button>
+    </div>
+  </div>
+  </div>
+</div>

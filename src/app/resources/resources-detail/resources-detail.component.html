@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-9">
+    <h2>{{pageTitle}}</h2>
+
+  </div>
+  <div class="col-md-3 ">
+    <h5 class="pull-right">Resource Group</h5>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-block">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Description</h5>
+          <p>{{resourceLibraryAsset?.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-block">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+         <img *ngIf="resourceLibraryAsset?.assetType === IResourceLibraryAssetType.Image" [src]="resourceLibraryAsset.fileProperties.url | sanitizeUrlPipe" />
+         <vg-player #vgplayer class="embed-responsive embed-responsive-16by9" *ngIf="resourceLibraryAsset?.assetType === IResourceLibraryAssetType.Video">
+          <video class="embed-responsive-item" [vgHls]="resourceLibraryAsset?.fileProperties.url" #media id="singleVideo"
+            preload="auto" controls type="resourceLibraryAsset?.contentType">
+          </video>
+        </vg-player>
+        <div class="embed-responsive embed-responsive-16by9" *ngIf="(resourceLibraryAsset?.assetType === IResourceLibraryAssetType.PDF || resourceLibraryAsset?.assetType === IResourceLibraryAssetType.HTML || resourceLibraryAsset?.assetType === IResourceLibraryAssetType.Other) && resourceLibraryAsset?.fileProperties?.url">
+          <object class="embed-responsive-item" [data]="resourceLibraryAsset.fileProperties.url | sanitizeUrlPipe" width="100%" height="100%" [type]='resourceLibraryAsset?.fileProperties.contentType'>
+            <p>Sorry, the Resource couldn't be displayed. Please click the link below to open the resource in a new window:(</p>
+            <a [href]="resourceLibraryAsset.fileProperties.url | sanitizeUrlPipe" target="_blank">Open Resource</a>
+          </object>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<button type="button" class="btn   btn-default" [routerLink]="['/resources']">Back</button>
+
+<br><br>

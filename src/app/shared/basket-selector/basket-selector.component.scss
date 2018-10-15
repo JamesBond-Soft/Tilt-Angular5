@@ -1,0 +1,40 @@
+/* Tree heirarchy styling */
+ul.tree, ul.tree ul {
+    list-style: none;
+     margin: 0;
+     padding: 0;
+
+   } 
+   ul.tree ul {
+     margin-left: 10px;
+   }
+   ul.tree li {
+     margin: 0;
+     padding: 0 7px;
+     line-height: 20px;
+
+     font-weight: bold;
+     border-left:1px solid rgb(255,255,255);
+       padding: .75rem 1.25rem;
+       margin-bottom: -1px;
+       background-color: #fff;
+       border: 1px solid rgba(0, 0, 0, .125)
+  
+   }
+   ul.tree li:last-child {
+       border-left:none;
+   }
+   ul.tree li:before {
+      position:relative;
+      top:-0.3em;
+      height:1em;
+      width:12px;
+      color:blue;
+      border-bottom:1px solid rgb(100,100,100);
+      content:"";
+      display:inline-block;
+      left:-7px;
+   }
+   ul.tree li:last-child:before {
+      border-left:1px solid rgb(100,100,100);   
+   }

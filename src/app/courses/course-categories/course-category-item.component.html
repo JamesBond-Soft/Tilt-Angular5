@@ -1,0 +1,10 @@
+<li>
+
+    <span class="list-group-item list-group-item-action groupItem noselect" [ngClass]="{'active text-white':selected, 'groupLocked': !this.courseCategoryItemService.allowClick || (this.courseCategoryItemService.showSecondarySelection && this.selected), 'bg-secondary text-white':secondarySelected && this.courseCategoryItemService.showSecondarySelection}" (click)="cmdSelect(category)">    <i [ngClass]="expanded ? 'fa fa-caret-down fa-lg' : 'fa fa-caret-right fa-lg'" *ngIf="category.subCourseCategories.length" (click)="cmdExpand()"></i>
+{{category.name}} <i class="fa fa-arrow-right" aria-hidden="true" *ngIf="this.selected"></i></span>
+
+    <i class="fa fa-circle-o" aria-hidden="true" *ngIf="secondarySelected && this.courseCategoryItemService.showSecondarySelection"></i>
+    <ul *ngIf="category.subCourseCategories.length" [hidden]="!expanded">
+        <course-category-item *ngFor="let subCategoryItem of category.subCourseCategories" [category]="subCategoryItem"></course-category-item>
+    </ul>
+</li>

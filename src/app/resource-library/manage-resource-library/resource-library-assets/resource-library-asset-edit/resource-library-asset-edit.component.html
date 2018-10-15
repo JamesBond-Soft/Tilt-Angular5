@@ -1,0 +1,97 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">{{pageTitle}}</h4>
+    <div class="form-group-attached" [formGroup]="resourceForm">
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.name}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="name">Name *</label>
+            <input class="form-control" id="name" type="text" placeholder="Name (required)" formControlName="name" autofocus />
+            <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.description}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="description">Description</label>
+            <textarea class="form-control" id="description" type="text" placeholder="Description" formControlName="description" style="min-height:100px;"></textarea>
+            <span class="help-block" *ngIf="displayMessage.description">{{displayMessage.description}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.extRefNum}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="extRefNum">Ext Reference ID</label>
+            <input class="form-control" id="extRefNum" type="text" placeholder="Ext Reference ID" formControlName="extRefNum" />
+            <span class="help-block" *ngIf="displayMessage.extRefNum">{{displayMessage.extRefNum}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.assetType}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="assetType">Asset Type *</label>
+            <select id="assetType" class="form-control" title="assetType" formControlName="assetType" (change)="assetTypeOnChange($event)">
+              <option *ngFor="let item of IResourceLibraryAssetType | enumToArray" [value]="+IResourceLibraryAssetType[item].valueOf()">{{ item }}</option>
+            </select>
+            <span class="help-block" *ngIf="displayMessage.assetType">{{displayMessage.assetType}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.organisationId}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="organisationId">Organisation</label>
+            <select class="form-control" id="organisation" formControlName="organisationId" (change)="cmdChangeOrg()">
+              <option value="0">None</option>
+              <option *ngFor="let org of organisations" [value]="org.organisationId">{{org.organisationName}}</option>
+            </select>
+            <span class="help-block" *ngIf="displayMessage.organisationId">{{displayMessage.organisationId}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="form-group form-group-default">
+                <label class="control-label">Resource Category</label>
+                <span>{{selectedResourceCategory? selectedResourceCategory?.name : 'None'}} </span><button type="button" class="btn btn-primary btn-sm  " (click)="cmdSelectResourceCategory()" [disabled]="+resourceForm.get('organisationId').value <= 0">Select</button>
+            </div>
+        </div>
+      </div>
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.assetStatus}" [hidden]="resourceLibraryAsset?.assetStatus === IResourceLibraryAssetStatus.Uploading">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="assetStatus">Asset Status</label>
+            <div class="form-control-plaintext"><span class="badge">{{IResourceLibraryAssetStatus[resourceLibraryAsset?.assetStatus]}}</span></div>
+            <span class="help-block" *ngIf="displayMessage.assetStatus">{{displayMessage.assetStatus}}</span>
+          </div>
+        </div>
+      </div>
+      <resource-file-upload #resourceFileUploadComponent *ngIf="!resourceLibraryAsset?.resourceLibraryAssetId" [allowedMimeTypes]="allowedMimeTypes"></resource-file-upload>
+      <resource-file-details [fileProperties]="resourceLibraryAsset?.preProcessedFileProperties"></resource-file-details>
+      <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Assigned to Groups:</h5>
+            <div class="row">
+              <div class="col-12">
+                <basket-selector #groupBasketSelector shelfTitle="Available Groups" basketTitle="Selected Groups" dataBranchField="subGroups" displayField="name" (isDirty)="basketSelectorIsDirtyEventHandler($event)"></basket-selector>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="card mb-3" *ngIf="resourceLibraryAsset.resourceLibraryAssetId">
+        <!--<div class="card-body">
+          <h5 class="card-title">Used in the following Courses:</h5>
+          <div>TODO - this should show a list of courses + course module name to indicate if this resource was used inside a course</div>
+        </div>
+      </div>-->
+      
+    </div>
+    <button type="submit" class="btn   btn-primary" [disabled]="!resourceForm.valid || currentlySaving" (click)="cmdSave()">{{currentlySaving ? 'Saving...' : 'Save'}}</button>
+    <button type="button" class="btn   btn-warning" (click)="cmdCancelUpload()" *ngIf="currentlySaving && !resourceLibraryAsset.resourceLibraryAssetId">Cancel Upload</button>
+    <button type="button" class="btn   btn-danger" *ngIf="pageTitle?.indexOf('Add') == -1" (click)="cmdDelete()" [hidden]="currentlySaving">Delete</button>
+    <button type="button" class="btn   btn-default" (click)="cmdCancel()" [hidden]="currentlySaving">Cancel</button>
+  </div>
+</div> 

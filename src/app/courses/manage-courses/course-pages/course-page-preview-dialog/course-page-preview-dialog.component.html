@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cmdClose()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card">
+        <div class="card-body">
+            <div *ngIf="page?.coursePageContent?.templateType === 0">
+                <div class="alert alert-danger" *ngIf="!page.coursePageContent.coursePageContentBlocks || !page.coursePageContent.coursePageContentBlocks.length" role="alert">Warning - No content on page. This page will appear blank</div>
+                <training-content #trainingContentComponent [page]="page"></training-content>
+            </div>
+            <div *ngIf="page?.coursePageContent?.templateType === 1">
+                    <div class="alert alert-danger" *ngIf="!page.coursePageContent.coursePageContentQuestions || !page.coursePageContent.coursePageContentQuestions.length" role="alert">Warning - No questions on page. This page will appear blank</div>
+                <training-question #trainingQuestionComponent [page]="page"></training-question>
+            </div>
+            <div *ngIf="page?.coursePageContent?.templateType === 3">
+                    <div class="alert alert-danger" *ngIf="!page.coursePageContent.coursePageContentBlocks || !page.coursePageContent.coursePageContentBlocks.length" role="alert">Warning - No content on page. This page will appear blank</div>
+                <training-dynamic-content #trainingDynamicContentComponent [page]="page"></training-dynamic-content>
+            </div>
+          
+        </div>
+    </div>
+</div>

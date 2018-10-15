@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Course Modules</h5>
+      <table class="table table-striped" *ngIf="moodleImportSummary?.moodleMappedCourseModules">
+          <thead>
+          <th>Module</th>
+          <th>Pages</th>
+          <th>Questionaires</th>
+          <th>Action</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let moodleMappedCourseModule of moodleImportSummary.moodleMappedCourseModules">
+              <td><b>{{moodleMappedCourseModule.courseModule.name}}</b></td>
+              <td><span class="badge badge-success">{{moodleMappedCourseModule.moodleActivityCount + moodleMappedCourseModule.moodleResourceCount}}</span></td>
+              <td><span class="badge badge-success">{{moodleMappedCourseModule.moodleQuizCount}}</span></td>
+              <td><button type="button" class="btn btn-danger btn-sm  " (click)="cmdRemoveModule(moodleMappedCourseModule)">Remove</button></td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

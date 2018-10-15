@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>Training History</h2>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Completion Date</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Pre-requisite Courses</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trainingHistory of trainingHistoryList">
+          <td>{{trainingHistory.course}}</td>
+          <td>{{trainingHistory.completionDate | date }}</td>
+          <td>{{trainingHistory.startDate | date }}</td>
+          <td><span *ngFor="let courseName of trainingHistory.prerequisiteCourses; let isLast=last">
+              {{courseName}}{{isLast ? '' : ', '}}
+              </span>
+              <span *ngIf="!trainingHistory.prerequisiteCourses || !trainingHistory.prerequisiteCourses.length">None</span>
+          </td>
+          <td><button type="button" class="btn btn-primary" *ngIf="trainingHistory.courseStatus === 1" (click)="cmdViewCompletedCourse(trainingHistory)">View Course Summary</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>

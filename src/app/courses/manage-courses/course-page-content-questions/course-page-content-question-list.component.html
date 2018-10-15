@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-6">
+      <div class="card padding-20">
+          <div class="card-body">
+              <div class="table-responsive">
+                    <div *ngIf="!coursePageContentQuestions || !coursePageContentQuestions?.length">
+                        <h4 class="text-center">Add a question to get started.</h4>
+                        <br/>
+                        <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddContentQuestion()" [hidden]="editContentQuestion || editContentQuestionOrder">Add Question</button>
+                    </div>
+                  <div *ngIf="coursePageContentQuestions && coursePageContentQuestions?.length">
+                      <div class="float-right">
+                          <button type="button" class="btn   btn-secondary" (click)="cmdStartEditContentQuestionOrder()" [hidden]="editContentQuestionOrder || editContentQuestion">Edit Question Order</button>
+                          <button type="button" class="btn   btn-primary" (click)="cmdFinishEditContentQuestionOrder()" [hidden]="!editContentQuestionOrder" >Done</button>
+                      </div>
+                      <table class="table table-hover table-condensed" id="condensedTable">
+                          <tbody>
+                          <tr *ngFor="let contentQuestion of coursePageContentQuestions; let i = index" (click)="cmdSelectContentQuestion(contentQuestion)">
+                              <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':contentQuestion === editContentQuestion}">{{contentQuestion.question}}<i class="fa fa-arrow-right" *ngIf="contentQuestion === editContentQuestion"></i></td>
+                              <td width="20%" [ngClass]="{'bg-primary text-light font-weight-bold':contentQuestion === editContentQuestion}">
+                                  <div class="btn-toolbar m-t-10" role="toolbar">
+                                      <div class="btn-group btn-group-xs" *ngIf="editContentQuestionOrder">
+                                            <button type="button" class="btn btn-default" [disabled]="i === (coursePageContentQuestions.length -1)" (click)="cmdMoveOrderDown(contentQuestion, $event)">
+                                                <i class="fa fa-arrow-down"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default" [disabled]="i === 0" (click)="cmdMoveOrderUp(contentQuestion, $event)">
+                                                <i class="fa fa-arrow-up"></i>
+                                            </button>
+                                      </div>
+                                  </div>
+                              </td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      <br/>
+                      <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddContentQuestion()" [hidden]="editContentQuestion || editContentQuestionOrder">Add Question</button>
+                      <br>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-6">
+      <course-page-content-question-edit #coursePageContentQuestionEditComponent *ngIf="showContentQuestionEditComponent" [coursePageContentQuestion]="editContentQuestion" (onFinishEditEvent)="onFinishEditContentQuestionHandler($event)"></course-page-content-question-edit>
+  </div>
+</div>

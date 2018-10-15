@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>Groups</h2>
+  </div>
+  <div class="col-md-6">
+    <!--CONTROL SECTION -->
+    <div class="float-right">
+      <button type="button" class="btn   btn-secondary" (click)="cmdExpandAll()"><i class="fa fa-angle-double-down"></i> Expand All</button>
+      <button type="button" class="btn   btn-secondary" (click)="cmdHideAll()"><i class="fa fa-angle-double-up"></i> Hide All</button>
+      <button type="button" class="btn   btn-primary" (click)="cmdAddGroup()" [hidden]="showEditCard">Add Group</button>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <div class="card padding-20">
+      <div class="card-block">
+
+        <div class="form-group form-group-default">
+          <label class="control-label" for="cboOrganisation">Organisation</label>
+          <select id="cboOrganisation" class="form-control" name="cboOrganisation" [(ngModel)]="selectedOrganisation" (change)="cmdChangeOrg()" [disabled]="showEditCard">
+            <option *ngFor="let org of orgs" [ngValue]="org">{{org.organisationName}}</option>
+          </select>
+        </div>
+        <!-- Groups Component rendered recursively. -->
+        <ul>
+          <group-item *ngFor="let group of groups" [group]="group"></group-item>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+        <group-edit [showEditCard]="showEditCard" [selectedGroup]="selectedGroup" [parentGroup]="parentGroup" (onFinishEditEvent)="onFinishEditEvent($event)" (onSelectParent)="onSelectParent($event)"></group-edit>
+      </div>
+    </div>

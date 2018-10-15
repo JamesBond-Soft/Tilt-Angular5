@@ -1,0 +1,64 @@
+<div class="form-group-attached">
+    <div class="row">
+       
+      <div class="col-3">
+        <div class="form-group form-group-default">
+          <label class="control-label">Ticket Type</label>
+          <div class="form-control-plaintext">{{ ITicketType[ticket?.ticketType] }}</div>
+        </div>
+      </div>
+      <div class="col-3">
+          <div class="form-group form-group-default">
+            <label class="control-label">Status</label>
+            <div class="form-control-plaintext">{{ ITicketStatusType[ticket?.status] }}</div>
+          </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group form-group-default">
+              <label class="control-label">Created Date</label>
+              <div class="form-control-plaintext">{{ ticket?.createdDate | date }}</div>
+            </div>
+          </div>
+          <div class="col-3">
+              <div class="form-group form-group-default">
+                <label class="control-label">Ticket Resolution</label>
+                <div class="form-control-plaintext">{{ ticket?.ticketResolution ? ITicketResolutionType[ticket.ticketResolution] : '-' }}</div>
+              </div>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group form-group-default">
+              <label class="control-label">Title</label>
+              <div class="form-control-plaintext">{{ ticket?.title }}</div>
+            </div>
+          </div>
+      <div class="col-8">
+        <div class="form-group form-group-default">
+          <label class="control-label">Description</label>
+          <div class="form-control-plaintext">{{ ticket?.description }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      
+       <div class="col-4">
+            <div class="form-group form-group-default">
+              <label class="control-label">Assigned to</label>
+              <div class="form-control-plaintext">{{ ticket?.assignedUserDisplayName }}</div>
+            </div>
+          </div>
+      <div class="col-4">
+          <div class="form-group form-group-default">
+              <label class="control-label">Reported By</label>
+              <div class="form-control-plaintext">{{ ticket?.reportedByUserDisplayName }}</div>
+            </div>
+      </div>
+      <div class="col-4">
+          <div class="form-group form-group-default">
+            <label class="control-label">Organisation</label>
+            <div class="form-control-plaintext">{{ ticket?.organisationId | organisationNamePipe: organisations }}</div>
+          </div>
+        </div>
+    </div>
+  </div>

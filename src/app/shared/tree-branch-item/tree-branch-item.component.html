@@ -1,0 +1,12 @@
+<li class="treeBranchItem">
+  <span class="list-group-item list-group-item-action groupItem noselect" (click)="cmdClick(item)" [ngClass]="getTreeItemCSS(item)" >
+    <!-- <i [ngClass]="expanded ? 'fa fa-caret-down fa-lg' : 'fa fa-caret-right fa-lg'" *ngIf="group.subGroups.length" (click)="cmdExpand()"></i> -->
+    {{item.data[item.displayField]}} 
+    <i class="fa fa-arrow-right" aria-hidden="true" *ngIf="item.selected"></i>
+    <span [hidden]="!item.data.assigned"class="label label-default pull-right">Assigned</span>
+  </span>
+  <!-- <i class="fa fa-circle-o" aria-hidden="true" *ngIf="secondarySelected && this.groupItemService.showSecondarySelection"></i> -->
+  <ul *ngIf="item.dataBranchField && item.data[item.dataBranchField] && item.data[item.dataBranchField].length">
+    <tree-branch-item *ngFor="let treeBranchLeaf of item.data[item.dataBranchField]" [data]="treeBranchLeaf" [displayField]="item.displayField" [dataBranchField]="item.dataBranchField" [seriesName]="item.seriesName"></tree-branch-item>
+  </ul>
+</li>

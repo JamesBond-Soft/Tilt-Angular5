@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- START card -->
+        <div class="card card-transparent">
+            <div class="card-title">
+                <h4>{{pageTitle}}</h4>
+            </div>
+            <div class="card-block">
+                <form novalidate (ngSubmit)="cmdSave()" [formGroup]="courseModuleForm">
+                    <div class="form-group-attached">
+                        <div class="row clearfix" [ngClass]="{'has-error': displayMessage.name}">
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="name">Name</label>
+                                    <input class="form-control" id="name" type="text" placeholder="Name (required)" formControlName="name" />
+                                    <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="description">Description</label>
+                                    <input class="form-control" id="description" type="text" placeholder="Description" formControlName="description" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="extCourseModuleRefNum">Ext Ref Course Module ID</label>
+                                    <input class="form-control" id="extCourseModuleRefNum" type="text" placeholder="Ext. Ref Course Module ID" formControlName="extCourseModuleRefNum"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <course-page-list [courseModule]="courseModule"></course-page-list>
+                    <br>
+                    <button type="submit" class="btn   btn-primary" [disabled]="!courseModuleForm.valid">Save</button>
+                    <button type="button" class="btn   btn-danger" *ngIf="courseModule.courseModuleId" (click)="cmdDelete()">Delete</button>
+                    <button type="button" class="btn   btn-default" (click)="cmdCancel()">Cancel</button>
+                </form>
+
+            </div>
+        </div>
+        <!-- END card -->
+       
+    </div>
+</div>

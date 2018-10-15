@@ -1,0 +1,88 @@
+<div class="modal-header">
+  <h6 class="modal-title ">{{pageTitle}}</h6>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="cmdClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </div>
+        <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+      </div>
+    </div>
+  </form>
+  <div class="btn-group pull-right">
+    <button type="button" class="btn btn-success btn-xs btn-mini" [ngClass]="{'active' : displayMode === IMediaPickerDisplayMode.List }"
+      (click)="cmdChangeDisplayMode(IMediaPickerDisplayMode.List)">View As List</button>
+    <button type="button" class="btn btn-success btn-xs btn-mini" [ngClass]="{'active' : displayMode === IMediaPickerDisplayMode.Gallery }"
+      (click)="cmdChangeDisplayMode(IMediaPickerDisplayMode.Gallery)">View As Gallery</button>
+  </div>
+  <div class="gallery" [hidden]="displayMode !== IMediaPickerDisplayMode.Gallery">
+
+    <div class="row">
+
+      <div class="sm-col-4" style="padding-right: 10px" *ngFor="let resourceLibraryAsset of resourceLibraryAssets | filterResourceLibraryAssetsPipe : searchString">
+        <div class="gallery-item" data-width="1">
+
+          <img *ngIf="mediaPickerMode == IMediaPickerMode.Image" style="max-height: 100%;" [src]="resourceLibraryAsset.fileProperties ? resourceLibraryAsset.fileProperties.url : 'assets/img/tilt-placeholder.jpg'" alt="" class="">
+          <img *ngIf="mediaPickerMode == IMediaPickerMode.Video" style="max-height: 100%;" [src]="resourceLibraryAsset.thumbnailFileProperties ? resourceLibraryAsset.thumbnailFileProperties.url : 'assets/img/tilt-placeholder.jpg'" alt="" class="">
+
+
+          <div class="overlayer bottom-left full-width">
+            <div class="overlayer-wrapper item-info ">
+              <div class="gradient-grey p-l-20 p-r-20 p-t-20 p-b-5">
+                <div class="">
+                  <div class="clearfix"></div>
+                </div>
+                <div class="m-t-10">
+                  <div class="inline m-l-10">
+                    <h5 class="no-margin text-white ">{{resourceLibraryAsset.name}}</h5>
+                    <p class="no-margin text-white fs-12">{{resourceLibraryAsset.description}}</p>
+                  </div>
+                  <div class="pull-right m-t-10">
+                    <button type="button" class="btn btn-success btn-xs btn-mini" (click)="cmdInsert(resourceLibraryAsset)">Insert</button>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="table-responsive" [hidden]="displayMode !== IMediaPickerDisplayMode.List">
+    <table class="table">
+      <thead>
+        <th>Media Name</th>
+        <th>Description</th>
+        <th>Uploaded</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resourceLibraryAsset of resourceLibraryAssets | filterResourceLibraryAssetsPipe : searchString">
+          <td>{{resourceLibraryAsset.name}}</td>
+          <td>{{resourceLibraryAsset.description}}</td>
+          <td>{{resourceLibraryAsset.modifiedDate | timeAgo}}</td>
+          <td>
+            <button class="btn btn-success btn-xs btn-mini" type="button" (click)="cmdInsert(resourceLibraryAsset)">Insert</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+  </div>
+  <br>
+  <button type="button" class="btn btn-primary pull-right" (click)="cmdClose()">Close</button>
+  <br>
+</div>

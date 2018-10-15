@@ -1,0 +1,73 @@
+<div class="card">
+  <h4 class="card-title">{{pageTitle}}</h4>
+  <div class="card-body">
+    <form novalidate (ngSubmit)="cmdSave()" [formGroup]="profileForm">
+      <div class="form-group" [ngClass]="{'has-error': displayMessage.firstName}">
+        <label class="col-md-2 control-label" for="firstName">First Name *</label>
+        <div class="col-md-8">
+          <input class="form-control" id="firstName" type="text" placeholder="First Name (required)" formControlName="firstName" />
+          <span class="help-block" *ngIf="displayMessage.firstName">{{displayMessage.firstName}}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="lastName">Last Name</label>
+        <div class="col-md-8">
+          <input class="form-control" id="lastName" type="text" placeholder="Last Name" formControlName="lastName" />
+          <span class="help-block" *ngIf="displayMessage.lastName">{{displayMessage.lastName}}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="lastName">DOB</label>
+        <div class="col-md-8">
+          <input class="form-control" id="dob" type="text" placeholder="Date of Birth" formControlName="dob" />
+          <span class="help-block" *ngIf="displayMessage.dob">{{displayMessage.dob}}</span>
+        </div>
+      </div>
+      <div formGroupName="emailGroup" [ngClass]="{'has-error': displayMessage.emailGroup}">
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="email">Email</label>
+          <div class="col-md-8">
+            <input class="form-control" id="email" type="text" placeholder="Email" formControlName="email" />
+            <span class="help-block" *ngIf="displayMessage.email">{{displayMessage.email}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="phone">Phone No.</label>
+        <div class="col-md-8">
+          <input class="form-control" id="phone" type="text" placeholder="Phone" formControlName="phone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="workPhone">Work Phone No.</label>
+        <div class="col-md-8">
+          <input class="form-control" id="workPhone" type="text" placeholder="Work Phone" formControlName="workPhone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="workPhone">Work Mobile Phone No.</label>
+        <div class="col-md-8">
+          <input class="form-control" id="workMobilePhone" type="text" placeholder="Work Mobile Phone" formControlName="workMobilePhone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="pin">4 Digit PIN</label>
+        <div class="col-md-8">
+          <input class="form-control" id="pin" type="password" formControlName="pin" maxlength="4" />
+          <div class="alert alert-danger" style="margin-top: 7px;" *ngIf="profileForm.errors?.PinLengthValid">Pin must be 4 digits</div>
+        </div>        
+      </div>      
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="pinRepeat">Repeat PIN</label>
+        <div class="col-md-8">
+          <input class="form-control" id="pinRepeat" type="password" formControlName="pinRepeat" maxlength="4" />
+          <div class="alert alert-danger" style="margin-top: 7px;" *ngIf="profileForm.errors?.DoesPinMatch">4 Digit pin does not match</div>
+        </div>        
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!profileForm.valid">Save</button>
+        <button type="button" class="btn btn-default" (click)="cmdCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

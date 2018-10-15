@@ -1,0 +1,50 @@
+<div class="card" *ngIf="trainingHistory">
+  <div class="card-body">
+    <h4 class="card-title">Course Summary</h4>
+    <div class="row">
+      <div class="col-6">Course</div>
+      <div class="col-6">{{trainingHistory.course}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Start Date</div>
+      <div class="col-6">{{trainingHistory.startDate | date }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Completition Date</div>
+      <div class="col-6">{{trainingHistory.completionDate | date }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Course Pre-requisites</div>
+      <div class="col-6"><span *ngFor="let courseName of trainingHistory.prerequisiteCourses; let isLast=last">
+          {{courseName}}{{isLast ? '' : ', '}}
+          </span><span *ngIf="!trainingHistory.prerequisiteCourses || !trainingHistory.prerequisiteCourses.length">None</span></div>
+    </div>
+    <div class="row">
+      <div class="col-6">View Completed Course</div>
+      <div class="col-6"><button type="button" class="btn btn-primary btn-rounded" *ngIf="trainingHistory.courseStatus === 1" (click)="cmdViewCompletedCourse(trainingHistory)">View Completed Course</button><span class="alert alert-warning" *ngIf="this.trainingHistory.courseStatus !== 1">Course no longer available for viewing</span></div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="courseSessionResult">
+    <h4 class="card-title">Course Results</h4>
+    <div class="row">
+      <div class="col-6">Total Questions</div>
+      <div class="col-6">{{courseSessionResult.totalQuestions}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Total Score</div>
+      <div class="col-6">{{courseSessionResult.totalCorrect}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Pass / Fail</div>
+      <div class="col-6"><span class="badge" [ngClass]="courseSessionResult.pass ? 'badge-success' : 'badge-danger'">{{courseSessionResult.pass ? 'Pass' : 'Fail'}}</span></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h4>Questionnaire Results</h4>
+        <questionnaire-summary *ngFor="let csqr of courseSessionResult.courseSessionQuestionnaireResults" [courseSessionQuestionnaireResult]="csqr"></questionnaire-summary>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<button type="button" class="btn btn-default" (click)="cmdBack()">Back</button>

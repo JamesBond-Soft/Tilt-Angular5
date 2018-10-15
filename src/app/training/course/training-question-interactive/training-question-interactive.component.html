@@ -1,0 +1,25 @@
+<div *ngIf="questionPack">
+    <div class="card">
+        <div class="card-block">
+            <div class="card-body">
+      
+                <div class="row question-border" *ngFor="let questionItem of questionPack.coursePageContentQuestions; index as i;" [attr.id]="'cpcqid-'+questionItem.coursePageContentQuestionId">
+                    <div class="col-md-8">
+                        <h5>{{questionItem.question}}</h5>
+                    </div>
+                    <div class="col-md-4 dropzone" [dragula]="dragulaContainerName"  [attr.data-mode]="'single'">
+                        <div class="placeholder"> Drag your answer </div>
+                    </div>
+                </div>
+      
+                <h5>Answers</h5>
+                <div [dragula]="dragulaContainerName"  style="min-height: 30px" #answersContainer>
+                  <div class="btn btn-xs btn-rounded btn-info" *ngFor="let responseItem of answers" [attr.data-id]="'cpcqrid-'+responseItem.coursePageContentQuestionResponseId" [ngClass]="{'no-drag' : courseSessionReadOnly}">{{responseItem.response}}</div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- For testing 
+      <button type="button" class="btn btn-primary btn-rounded" (click)="cmdSubmitAnswers()">Submit Answers</button>
+      <button type="button" class="btn btn-primary btn-rounded" (click)="cmdReset()">Reset</button> -->
+</div>

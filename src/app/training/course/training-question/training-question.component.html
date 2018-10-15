@@ -1,0 +1,16 @@
+<div>
+    <div *ngFor="let questionObj of questionMapItems; let i = index;">
+      <div>
+          <h4>{{questionObj.questionItem.question}}</h4>
+          <div class="btn-group" *ngIf="questionObj.questionItem.coursePageContentQuestionType === ICoursePageContentQuestionType.SingleChoice || questionObj.questionItem.coursePageContentQuestionType === ICoursePageContentQuestionType.MultiChoice">
+              <button type="button" class="btn btn-rounded btn-success" [ngClass]="{'active': responseObj.selected}" *ngFor="let responseObj of questionObj.responseItems" (click)="cmdClickResponse($event, questionObj, responseObj)">{{responseObj.responseItem.response}}</button>
+          </div>
+          <div class="form-group" *ngIf="questionObj.questionItem.coursePageContentQuestionType === ICoursePageContentQuestionType.WrittenAnswer">
+            Written-Answer
+            <input type="text" #writtenResponseTextBox class="form-control" placeholder="Type your answer here" *ngFor="let responseObj of questionObj.responseItems" (keyup)="cmdUpdateResponseTextValue(questionObj, responseObj, writtenResponseTextBox.value)" [(ngModel)]="responseObj.textValue" [disabled]="courseSessionReadOnly" />  
+          </div>
+      </div>
+    </div>
+    <br>
+  </div>
+<!-- <button type="button" class="btn btn-danger" (click)="cmdTest()">Test</button> -->

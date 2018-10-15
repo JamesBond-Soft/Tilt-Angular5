@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">New Course Configuration</h4>
+    <h5>Course Information</h5>
+    <div class="form-group-attached" [formGroup]="courseForm">
+      <div class="row clearfix" [ngClass]="{'has-error': displayMessage.organisationName}">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="name">Name *</label>
+            <input class="form-control" id="name" type="text" placeholder="Name (required)" formControlName="name" />
+            <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="description">Description</label>
+            <input class="form-control" id="description" type="text" placeholder="Description" formControlName="description" />
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="extRefCourseNum">Ext Ref Course ID</label>
+            <input class="form-control" id="extRefCourseNum" type="text" placeholder="Ext. Ref Course ID" formControlName="extRefCourseNum"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.organisationId}">
+            <label class="control-label" for="cboOrganisation">Organisation *</label>
+            <select id="cboOrganisation" class="form-control" name="cboOrganisation" formControlName="organisationId" (change)="cmdChangeOrg()">
+              <option *ngFor="let org of orgs" [value]="org.organisationId">{{org.organisationName}}</option>
+            </select>
+            <span class="help-block" *ngIf="displayMessage.organisationId">{{displayMessage.organisationId}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="extRefCourseNum">Course Category</label>
+            <span>{{selectedCourseCategory? selectedCourseCategory?.name : 'None'}} </span>
+            <button type="button" class="btn btn-primary btn-sm  "
+              (click)="cmdSelectCourseCategory()" [disabled]="!courseForm.get('organisationId').value">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+          <import-course-preview [moodleImportSummary]="moodleImportSummary"></import-course-preview>
+      </div>
+    </div>
+  </div>
+</div>

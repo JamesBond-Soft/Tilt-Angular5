@@ -1,0 +1,89 @@
+<div class="row bg-light text-dark" *ngIf="showEditCard">
+  <div class="card">
+    <form novalidate (ngSubmit)="cmdSave()" [formGroup]="questionForm">
+    <div class="card-block padding-20">
+      <div class="row">
+        <div class="col-6">
+          <h4>Edit Questions</h4>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-info pull-right" (click)="cmdCancelEdit()">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': displayMessage.question}">
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <div class="form-group form-group-default">
+              <label class="control-label" for="question">Question Name *</label>
+              <input type="text" id="question" class="form-control" placeholder="Question Name (required)" formControlName="question" />
+              <span class="help-block text-danger" *ngIf="displayMessage.question">{{displayMessage.question}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- start responses table -->
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed" id="condensedTable">
+          <thead>
+            <th>Response</th>
+            <th>Related Group</th>
+            <th> </th>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let responseItem of selectedQuestion.responses" (click)="cmdSelectResponse(responseItem)">
+              <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':responseItem === selectedResponseItem}">{{responseItem.response}}</td>
+              <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':responseItem === selectedResponseItem}">{{responseItem.relatedGroup?.name}}</td>
+              <td class="v-align-middle" width="10%" [ngClass]="{'bg-primary text-light font-weight-bold':responseItem === selectedResponseItem}">
+                <button type="button" class="btn btn-danger btn-xs pull-right" (click)="cmdRemoveResponse(responseItem)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+
+        <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddResponse()">Add Response</button>
+
+
+        <hr>
+
+
+        <div class="padding-10" *ngIf="showEditResponseSection">
+          <h4>New Response</h4>
+
+          <div class="form-group-attached">
+            <div class="row clearfix">
+              <div class="col-md-6">
+                <div class="form-group form-group-default" formGroupName="responseGroup" [ngClass]="{'has-error': displayMessage.response}">
+                  <label class="control-label" for="response">Response *</label>
+                  <input type="text" id="response" class="form-control" placeholder="Response (required)" formControlName="response" />
+                  <span class="help-block text-danger" *ngIf="displayMessage.response">{{displayMessage.response}}</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-group-default">
+                  <label class="control-label" for="related">Related Group *</label>
+                  <span class="form-control-static">{{selectedResponseItem.relatedGroupId ? selectedResponseItem.relatedGroup?.name : 'None (required)'}}</span> <span class="label label-inverse" (click)="cmdSelectGroup()">Change</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <button type="button" class="btn btn-primary   pull-right" (click)="cmdSaveResponse()">{{selectedResponseItem.selfAssessmentQuestionResponseId ? 'Save' : 'Add'}}</button>
+          <button type="button" class="btn btn-default   pull-right" (click)="cmdCancelEditResponse()">Cancel</button>
+          <br/>
+        </div>
+      </div>
+        <br />
+        <button type="button" class="btn btn-primary  " (click)="cmdSave()">Save</button>
+        <button type="button" class="btn btn-default  " (click)="cmdCancelEdit()">Cancel</button>
+        <button type="button" class="btn btn-danger  " (click)="cmdDelete()" *ngIf="selectedQuestion.selfAssessmentQuestionId">Delete</button>
+
+      </div>
+    </form>
+    </div>
+  </div>

@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">Course Module</div>
+      <div class="col-6">{{displayMap?.courseModuleName}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Course Page</div>
+      <div class="col-6">{{displayMap?.coursePageName}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Total Questions</div>
+      <div class="col-6">{{courseSessionQuestionnaireResult.totalQuestions}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Total Score</div>
+      <div class="col-6">{{courseSessionQuestionnaireResult.totalCorrect}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">Pass / Fail</div>
+      <div class="col-6"><span class="badge" [ngClass]="courseSessionQuestionnaireResult.pass ? 'badge-success' : 'badge-danger'">{{courseSessionQuestionnaireResult.pass ? 'Pass' : 'Fail'}}</span></div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h6 class="card-title">Responses</h6>
+        <div class="table-responsive" *ngIf="courseSessionResultQuestionMapInfoList && courseSessionResultQuestionMapInfoList.length">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Correct / Incorrect</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let qMap of courseSessionResultQuestionMapInfoList">
+                <td>{{qMap.question}}</td>
+                <td><ng-container *ngFor="let rMap of qMap.responses; let isLast = last">{{rMap.answer}}{{isLast ? '' : ', '}}</ng-container></td>
+                <td>
+                  <span class="badge badge-success" *ngIf="qMap.pass">Correct</span>
+                  <span class="badge badge-danger" *ngIf="!qMap.pass">Incorrect</span>
+                </td>
+                <td>{{qMap.score}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-warning" *ngIf="!courseSessionResultQuestionMapInfoList?.length">
+          Empty Questionnaire - No Questions or Responses.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

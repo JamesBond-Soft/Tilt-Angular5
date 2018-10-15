@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>Templates</h2>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn   btn-primary m-b-10 pull-right"><span class="glyphicon glyphicon-plus"></span> Add Template</button>
+  </div>
+</div>
+<div class="card card-transparent">
+  <div class="card-block">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+          <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed" id="condensedTable">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="v-align-middle semi-bold">Introduction Course Template</td>
+          <td class="v-align-middle">this template contains 5 modules to walk users th...</td>
+          <td class="v-align-middle semi-bold"><span class="label label-success" >Published</span></td>
+          <td class="v-align-middle"><a href="/courses/templates/view" class="btn   btn-primary btn-sm">View</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="v-align-middle semi-bold">Clinical Course Template</td>
+          <td class="v-align-middle">this template contains modules for clinical...</td>
+          <td class="v-align-middle semi-bold"><span class="label label-info" >Draft</span></td>
+          <td class="v-align-middle"><a href="/courses/templates/view" class="btn   btn-primary btn-sm">View</a>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

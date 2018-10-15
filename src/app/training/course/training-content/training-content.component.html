@@ -1,0 +1,15 @@
+<div *ngFor="let contentBlock of page.coursePageContent.coursePageContentBlocks">
+  <div *ngIf="contentBlock.blockType === IContentBlockType.HTML">
+    <div [innerHTML]="contentBlock.content | sanitizeHtmlPipe"></div>
+  </div>
+  <div *ngIf="contentBlock.blockType === IContentBlockType.Video">
+    <vg-player #vgplayer class="embed-responsive embed-responsive-16by9">
+      <video class="embed-responsive-item" [vgHls]="contentBlock.resourceLibraryAsset.fileProperties.url" #media id="singleVideo"
+        preload="auto" controls type="contentBlock.resourceLibraryAsset.contentType">
+      </video>
+    </vg-player>
+  </div>
+  <div *ngIf="contentBlock.blockType === IContentBlockType.Resource">
+    <training-content-resource [contentBlock]="contentBlock"></training-content-resource>
+  </div>
+</div>

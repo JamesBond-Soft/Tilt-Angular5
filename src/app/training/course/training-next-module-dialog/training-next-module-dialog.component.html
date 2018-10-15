@@ -1,0 +1,8 @@
+<ng-template #nextModuleDialogTemplate>
+  <div class="modal-body text-center">
+    <h4 class="module-complete font-weight-bold"><i class="fa fa-check-circle font-weight-normal"></i> {{currentModuleName}} Completed</h4>
+    <h4>Would you like to start the next module - <b>{{nextModuleName}}?</b></h4>
+    <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-default" (click)="decline()" >No</button>
+  </div>
+</ng-template>

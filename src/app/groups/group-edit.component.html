@@ -1,0 +1,71 @@
+
+<div class="row bg-light text-dark" *ngIf="showEditCard">
+  <div class="card">
+    <div class="card-block padding-20">
+     <div class="row">
+       <div class="col-6">
+         <h4>{{selectedGroup.name | uppercase}}</h4>
+
+       </div>
+       <div class="col-6">
+         <button type="button" class="btn btn-info pull-right" (click)="cmdCancelEdit()"><i class="fa fa-times"></i> </button>
+       </div>
+     </div>
+  <form novalidate (ngSubmit)="cmdSave()" [formGroup]="groupForm" class="col-12">
+
+    <div class="form-group">
+      <label for="parentGroup" class="col-form-label">Parent Group</label>
+      <div class="col">
+        <input type="text" id="parentGroupName" class="form-control-plaintext" placeholder="" value="{{parentGroup?parentGroup.name:'None'}}"/>
+        <button type="button" class="btn btn-primary" [ngClass]="{'active':parentGroupSelectionEnabled}" data-toggle="button" aria-pressed="false"
+          (click)="cmdSelectParentGroup()">{{parentGroupSelectionEnabled ? 'Done' : 'Change'}}</button>
+        <button type="button" class="btn btn-secondary" *ngIf="parentGroupSelectionEnabled && parentGroup" (click)="cmdNoParentGroup()">None</button>
+        <div class="alert alert-primary" *ngIf="parentGroupSelectionEnabled">Select parent group from tree above</div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.groupName}">
+            <label class="control-label" for="name">Group Name</label>
+            <input type="text" id="groupName" class="form-control" placeholder="Group Name (required)" formControlName="groupName" />
+            <span class="help-block" *ngIf="displayMessage.groupName">{{displayMessage.groupName}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="groupDescription">Group Description</label>
+            <textarea id="groupDescription" class="form-control" rows="10" style="min-height: 100px;" formControlName="groupDescription"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group" style="margin-bottom: 10px">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="form-group form-group-default">
+            <label class="control-label" for="name">External Group Refence ID</label>
+            <input type="text" id="externalGroupReferenceID" class="form-control" placeholder="Ext. Ref. ID" formControlName="externalGroupReferenceID" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary  " (click)="cmdSaveGroup()" [disabled]="!groupForm.valid">Save</button>
+    <button type="button" class="btn btn-info  " (click)="cmdAddSubGroup()" *ngIf="selectedGroup.groupId">Add Sub-Group</button>
+    <button type="button" class="btn btn-danger   pull-right" (click)="cmdDeleteGroup()" *ngIf="selectedGroup.groupId">Delete</button>
+
+
+  </form>
+</div>
+  </div>
+</div>

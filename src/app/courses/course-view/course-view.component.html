@@ -1,0 +1,233 @@
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-9">
+      <h2>{{course.name}}     <span class="label" [ngClass]="{'label-success': course.status === 1, 'label-info': course.status === 0, 'label-danger': course.status === 2 }">{{course.status | courseStatusNamePipe}}</span> </h2>
+    </div>
+</div>
+  
+  <div class="card card-transparent ">
+      <pg-tabset tabAnimation="slide-left" Type="fillup" extraTabContentClass="bg-white">
+          <pg-tab>
+            <ng-template #TabHeading>
+              <span>Course Description</span>
+            </ng-template>
+            <div class="row column-seperation">
+                <div class="card">
+                    <div class="card-block">
+                      <div class="card-body">
+                        <div class="row row-bordered">
+                          <div class="col-md-3">
+                            <p><b>Course Description</b></p>
+                          </div>
+                          <div class="col-md-9">
+                            <p>{{course.description}}</p>
+                          </div>
+                        </div>
+                
+                        <div class="row row-bordered">
+                          <div class="col-md-3">
+                            <p><b>External Reference #</b></p>
+                          </div>
+                          <div class="col-md-9">
+                            <p>{{course.extRefCourseNum}}</p>
+                          </div>
+                        </div>
+                
+                        <div class="row row-bordered">
+                          <div class="col-md-3">
+                            <p><b>Course Category</b></p>
+                          </div>
+                          <div class="col-md-9">
+                            <p>{{selectedCourseCategory ? selectedCourseCategory.name : 'None'}}</p>
+                          </div>
+                        </div>
+
+                        <div class="row row-bordered">
+                          <div class="col-md-3">
+                            <p><b>Course Prerequisites</b></p>
+                          </div>
+                          <div class="col-md-9">                            
+                            <ul *ngIf="hasCoursePrerequisites"  style="padding-left: 15px;">
+                              <li *ngFor="let prerequisites of coursePrerequisistes">
+                                {{prerequisites.prerequisiteCourseName}}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        
+                         <button type="submit" style="margin:10px;" class="btn   btn-primary pull-right" [routerLink]="['/courses/manage', course.courseId, course.name]">Edit Course</button>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </pg-tab>
+
+          <pg-tab>
+            <ng-template #TabHeading>
+              <span>Modules</span>
+            </ng-template>
+            <div class="row">
+                <div class="card">
+                    <div class="card-block">
+                  
+                      <div class="card-body">
+                        <table class="table table-striped">
+                          <thead>
+                          <th>Module</th>
+                          <th>Pages</th>
+                          <th>Questionaires</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                          <th>{{editCourseModuleOrder? 'Order' : ''}}</th>
+                          </thead>
+                          <tr *ngFor="let courseModuleSummaryInfo of courseModuleSummaryInfoList">
+                            <td><b>{{courseModuleSummaryInfo.courseModuleName}}</b></td>
+                            <td><span [ngClass]="getCourseModuleBadgeCSS(courseModuleSummaryInfo)">{{courseModuleSummaryInfo.pagesCount}}</span></td>
+                            <td><span [ngClass]="getCourseModuleBadgeCSS(courseModuleSummaryInfo)">{{courseModuleSummaryInfo.questionairesCount}}</span></td>
+                            <td><b>{{courseModuleSummaryInfo.status | courseModuleSummaryInfoStatusNamePipe}}</b></td>
+                            <td><button type="button" class="btn btn-default btn-sm" (click)="cmdViewCourseModule($event, courseModuleSummaryInfo)">Edit</button></td>
+                            <td width="20%" >
+                              <div class="btn-toolbar m-t-10" role="toolbar">
+                                <div class="btn-group btn-group-xs" *ngIf="editCourseModuleOrder">
+                                  <button type="button" class="btn btn-default" [disabled]="i === (courseModuleSummaryInfoList.length -1)" (click)="cmdMoveOrderDown(courseModuleSummaryInfo, $event)">
+                                    <i class="fa fa-arrow-down"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-default" [disabled]="i === 0" (click)="cmdMoveOrderUp(courseModuleSummaryInfo, $event)">
+                                    <i class="fa fa-arrow-up"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </td>
+                            
+                          </tr>
+                        </table>
+
+                        <button style="margin:10px 5px;" type="button" class="btn btn-primary btn-sm  " [routerLink]="['/courses/module', 0, course.courseId,'Add Module']">Add Module</button>
+                        <button style="margin:10px 5px;" type="button" class="btn   btn-secondary" (click)="cmdEditCourseModuleOrder()" [hidden]="editCourseModuleOrder">Edit Course Module Order</button>
+                        <button style="margin:10px 5px;" type="button" class="btn   btn-primary" (click)="cmdDoneEditCourseModuleOrder()" [hidden]="!editCourseModuleOrder">Done</button>
+
+                      </div>
+                    </div>
+                  </div>    
+            </div>
+          </pg-tab>
+
+          <pg-tab>
+              <ng-template #TabHeading>
+                <span>Assigned Groups</span>
+              </ng-template>
+              <div class="row">
+                <div class="card">
+                  <div class="card-block">
+                    <div class="card-body">
+                
+                      <table class="table table-striped">
+                        <thead>
+                        <th></th>
+                        <th>Group Name</th>
+                        <th>Number of staff</th>
+                        <th>Action</th>
+                        </thead>
+                        <tr *ngFor="let courseGroupAssignmentSummaryInfo of courseGroupAssignmentSummaryInfoList">
+                          <td><div class="form-check"><input type="checkbox" class="form-check-input position-static" (change)="cmdOnChangeCourseGroupAssignment(courseGroupAssignmentSummaryInfo, $event.target.checked)"></div></td>
+                          <td><b>{{courseGroupAssignmentSummaryInfo.groupName}}</b></td>
+                          <td><span class="badge badge-success">{{courseGroupAssignmentSummaryInfo.staffCount}}</span> </td>
+                          <td><button type="button" class="btn btn-default btn-sm" (click)="cmdViewCourseGroupAssigned($event, courseGroupAssignmentSummaryInfo)">Edit</button></td>
+                        </tr>
+                      </table>
+
+                      <button type="button" style="margin:10px 5px" class="btn btn-primary btn-sm btn-rounded" [routerLink]="['/courses/groupassignment', 0, course.courseId, 'Assign Group']">Assign Group</button>
+                      <button type="button" style="margin:10px 5px" class="btn btn-default btn-sm btn-rounded" [hidden]="!selectedCourseGroupAssignmentIdList.length" (click)="cmdEditSelectedCourseGroupAssignments()">Edit Selected Assigned Groups</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </pg-tab>
+
+          <pg-tab>
+                <ng-template #TabHeading>
+                  <span> Adhoc Assigned Staff </span>
+                </ng-template>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-block">
+                          <div class="card-body">
+                            <table class="table table-striped">
+                              <thead>
+                              <th></th>
+                              <th>Staff Name</th>
+                              <th>Status</th>
+                              <th>Due Date</th>
+                              <th>Completed Date</th>
+                              <th>Action</th>
+                              </thead>
+                              <tr *ngFor="let courseAdhocAssignmentSummaryInfo of courseAdhocAssignmentSummaryInfoList">
+                                <td><div class="form-check"><input type="checkbox" class="form-check-input position-static" (change)="cmdOnChangeCourseAdhocAssignment(courseAdhocAssignmentSummaryInfo, $event.target.checked)"></div></td>
+                                <td>
+                                  <b>{{courseAdhocAssignmentSummaryInfo.staffName}}</b>
+                                </td>
+                                <td><b>{{courseAdhocAssignmentSummaryInfo.status | courseAdhocAssignmentSummaryInfoStatusNamePipe}}</b></td>
+                                <td>{{courseAdhocAssignmentSummaryInfo.dueDate ? (courseAdhocAssignmentSummaryInfo.dueDate | date) : '-' }}</td>
+                                <td>{{courseAdhocAssignmentSummaryInfo.completedDate ? (courseAdhocAssignmentSummaryInfo.completedDate | date) : '-' }}</td>
+                                <td>
+                                  <button type="button" class="btn btn-default btn-sm" (click)="cmdViewCourseAdhocAssigment($event, courseAdhocAssignmentSummaryInfo)">Edit</button>
+                                </td>
+                              </tr>
+                            </table>
+                            
+                            <button type="button" style="margin:10px 5px" class="btn btn-primary btn-sm  " [routerLink]="['/courses/staffassignment', 0, course.courseId, 'Assign Individual Staff']">Assign Individual Staff</button>
+                            <button type="button" style="margin:10px 5px" class="btn btn-default btn-sm  " [hidden]="!selectedCourseAdhocAssignmentIdList.length" (click)="cmdEditSelectedCourseAdhocAssignments()">Edit Selected Assigned Staff</button>
+
+                          </div>
+                        </div>
+                      </div>
+                </div>
+          </pg-tab>
+
+          <pg-tab>
+              <ng-template #TabHeading>
+                <span>Staff Results</span>
+              </ng-template>
+              <div class="row">
+                <div class="card">
+                  <div class="card-block">
+                    <div class="card-body">
+                      <table class="table table-striped">
+                        <thead>
+                        <th>Staff Name</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                        <th>Completed Date</th>
+                        <th>Action</th>
+                        </thead>
+                        <tr *ngFor="let courseAdhocAssignmentSummaryInfo of courseAdhocAssignmentSummaryInfoList">
+                          <td>
+                            <b>{{courseAdhocAssignmentSummaryInfo.staffName}}</b>
+                          </td>
+                          <td>
+                            <div class="progress m-b-0">
+                              <div class="" [ngClass]="getCourseAdhocAssignmentProgressBarCSS(courseAdhocAssignmentSummaryInfo)" [style.width.%]="courseAdhocAssignmentSummaryInfo.progress"></div>
+                            </div>
+                            <p align="center"> {{courseAdhocAssignmentSummaryInfo.progress}} %</p>
+                          </td>
+                          <td><b>{{courseAdhocAssignmentSummaryInfo.status | courseAdhocAssignmentSummaryInfoStatusNamePipe}}</b></td>
+                          <td>{{courseAdhocAssignmentSummaryInfo.dueDate ? (courseAdhocAssignmentSummaryInfo.dueDate | date) : '-' }}</td>
+                          <td>{{courseAdhocAssignmentSummaryInfo.completedDate ? (courseAdhocAssignmentSummaryInfo.completedDate | date) : '-' }}</td>
+                          <td>
+                            <button type="button" class="btn btn-default btn-sm" (click)="cmdViewCourseAdhocAssigment($event, courseAdhocAssignmentSummaryInfo)">View</button>
+                          </td>
+                        </tr>
+                      </table>
+                
+                    </div>
+                  </div>
+                </div>
+                    
+              </div>
+          </pg-tab>
+
+        </pg-tabset>
+  </div>
+  <button type="button" class="btn btn-default" (click)="cmdBack()" >Back</button>
+  
+  <br><br>

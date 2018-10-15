@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>{{pageTitle}}</h2>
+  </div>
+  <div class="col-md-6">
+    <!--CONTROL SECTION -->
+    <div class="float-right">
+
+    </div>
+  </div>
+</div>
+
+<div class="row" [formGroup]="adhocForm">
+  <div class="col-12">
+    <div class="card padding-20">
+      <div class="card-block">
+
+        <div class="row">
+          <div class="col-6">
+            <h5>Repeat Frequency</h5>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.repeatInterval}">
+              <label class="col-md-6 control-label" for="repeatInterval">Number</label>
+              <div class="col-md-6">
+                <input class="form-control" id="repeatInterval" type="number" placeholder="Number" formControlName="repeatInterval" />
+                <span class="help-block" *ngIf="displayMessage.repeatInterval">{{displayMessage.repeatNumber}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.repeatUnit}">
+              <label class="control-label" for="repeatUnit">Unit *</label>
+              <select id="repeatUnit" class="form-control" name="repeatUnit" formControlName="repeatUnit">
+                <option value="never">Never repeat</option>
+                <option value="days">Days</option>
+                <option value="weeks">Weeks</option>
+                <option value="months">Months</option>
+                <option value="years">Years</option>
+              </select>
+              <span class="help-block" *ngIf="displayMessage.repeatUnit">{{displayMessage.repeatUnit}}</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <h5>Dates</h5>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.startDate}">
+              <label class="col-md-6 control-label" for="startDate">Start Date *</label>
+              <div class="col-md-6">
+                <input class="form-control" id="startDate" type="text" placeholder="State Date" formControlName="startDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                <span class="help-block" *ngIf="displayMessage.startDate">{{displayMessage.startDate}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.endDate}">
+              <label class="col-md-6 control-label" for="endDate">End Date</label>
+              <div class="col-md-6">
+                <input class="form-control" id="endDate" type="text" placeholder="Due Date" formControlName="endDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                <span class="help-block" *ngIf="displayMessage.endDate">{{displayMessage.endDate}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.dueDate}">
+              <label class="col-md-6 control-label" for="dueDate">Due Date *</label>
+              <div class="col-md-6">
+                <input class="form-control" id="dueDate" type="text" placeholder="Due Date" formControlName="dueDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                <span class="help-block" *ngIf="displayMessage.dueDate">{{displayMessage.dueDate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <staff-basket-selector #staffBasketSelector shelfTitle="Available Staff" basketTitle="Selected Staff" (isDirty)="staffbasketSelectorIsDirtyEventHandler($event)" (searchStringChanged)="searchStringChangedEventHandler($event)"></staff-basket-selector>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+      <button type="button" class="btn   btn-default" (click)="cmdBack()">Back</button>
+  </div>
+  <div class="col-6">
+    <div class="pull-right">
+      <button type="button" class="btn   btn-danger" [hidden]="!courseAdhocAssignmentList?.length" (click)="cmdDeleteCourseAdhocAssignments()">Delete</button>
+      <button type="button" class="btn   btn-primary" [disabled]="!adhocForm.valid || !this.staffBasketSelector.basketItems?.length"
+        (click)="cmdSaveCourseAdhocAssignments()">{{this.courseAdhocAssignmentId === 0 ? 'Assign Staff' : 'Save Changes'}}</button>
+    </div>
+  </div>
+</div>
+<br/>
+<br/>

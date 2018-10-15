@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card padding-20">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="!coursePageContentBlocks || !coursePageContentBlocks?.length">
+                        <h4 class="text-center">Add a content block to get started.</h4>
+                        <br/>
+                        <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddContentBlock()" [hidden]="editContentBlock || editContentBlockOrder">Add Content Block</button>
+                    </div>
+                    <div *ngIf="coursePageContentBlocks && coursePageContentBlocks?.length">
+                        <div class="float-right">
+                            <button type="button" class="btn   btn-secondary" (click)="cmdStartEditContentBlockOrder()" [hidden]="editContentBlockOrder || editContentBlock">Edit Content Block Order</button>
+                            <button type="button" class="btn   btn-primary" [hidden]="!editContentBlockOrder" (click)="cmdFinishEditContentBlockOrder()">Done</button>
+                        </div>
+                        <table class="table table-hover table-condensed" id="condensedTable">
+                            <tbody>
+                                <tr [ngClass] *ngFor="let contentBlock of coursePageContentBlocks; let i = index" (click)="cmdSelectContentBlock(contentBlock)">
+                                    <td class="v-align-middle" [ngClass]="{'bg-primary text-light font-weight-bold':contentBlock === editContentBlock}">{{contentBlock.name}}<i class="fa fa-arrow-right" *ngIf="contentBlock === editContentBlock"></i></td>
+                                    <td style="width: 20%" [ngClass]="{'bg-primary text-light font-weight-bold':contentBlock === editContentBlock}">
+                                        <div class="btn-toolbar m-t-10" role="toolbar">
+                                                <div class="btn-toolbar m-t-10" role="toolbar">
+                                                    <div class="btn-group btn-group-xs" *ngIf="editContentBlockOrder">
+                                                        <button type="button" class="btn btn-default" [disabled]="i === (coursePageContentBlocks.length -1)" (click)="cmdMoveOrderDown(contentBlock, $event)">
+                                                            <i class="fa fa-arrow-down"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-default" [disabled]="i === 0" (click)="cmdMoveOrderUp(contentBlock, $event)">
+                                                            <i class="fa fa-arrow-up"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <button type="button" class="btn   btn-primary btn-block" (click)="cmdAddContentBlock()" [hidden]="editContentBlock || editContentBlockOrder">Add Content Block</button>
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <course-page-content-block-edit #coursePageContentBlockEditComponent *ngIf="showContentBlockEditComponent" [coursePageContentBlock]="editContentBlock" (onFinishEditEvent)="onFinishEditContentBlockHandler($event)"></course-page-content-block-edit>
+    </div>
+
+    NOTE: Template Selection gives a modal of template options for pre population. If you select a template for a page with existing
+    content the content will be replaced by the template. Changes to the template after the fact do not update courses created
+    with the template initially.
+
+</div>

@@ -1,0 +1,108 @@
+<div class="col-md-12">
+    <!-- START card -->
+    <div class="card card-transparent">
+        <div class="card-block">
+            <form [formGroup]="webinarForm" novalidate (ngSubmit)="cmdSave()">
+                <h4 class="card-title">Start / Schedule Webinar</h4>
+
+
+                    <h5>Webinar Details</h5>
+                    <div class="form-group-attached">
+                        <div class="row clearfix"  >
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.name}">
+                                    <label class="control-label" for="webinarName">Webinar Name *</label>
+                                    <input class="form-control" id="webinarName" type="text" placeholder="Webinar Name (required)" formControlName="name" />
+                                    <span class="help-block" *ngIf="displayMessage.name">{{displayMessage.name}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group form-group-default"  [ngClass]="{'has-error': displayMessage.description}">
+                                <label class="control-label" for="Description">Description</label>
+                                <input class="form-control" id="Description" type="text" placeholder="Description" formControlName="description" />
+                                <span class="help-block" *ngIf="displayMessage.description">{{displayMessage.description}}</span>
+                            </div>
+                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default" [ngClass]="{'has-error': displayMessage.scheduledDate}" >
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <label class="control-label" for="scheduledDate">Scheduled Date and Time *</label>
+                                                <input class="form-control" id="scheduledDate" type="text" placeholder="Date and Time (Selector)" formControlName="scheduledDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" />
+                                            </div>
+                                            <div class="col-4">
+                                                <timepicker formControlName="scheduledTime"></timepicker>
+                                            </div> 
+                                        </div>
+                                        <span class="help-block" *ngIf="displayMessage.scheduledDate">{{displayMessage.scheduledDate}}</span>
+                                 </div>
+                            </div>
+                             
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="duration">Expected Duration</label>
+                                    <input type="text" class="form-control" placeholder="Duration" id='duration' formControlName="duration" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="resource">Record as Resource</label>
+                                    <select class="form-control" id="resource" formControlName="recordAsResource">
+                                        <option value="false">No</option>
+                                        <option value="true">Yes</option>
+                                    </select></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="notification">Send Notification</label>
+                                    <select class="form-control" id="notification" formControlName="notificationType">
+                                        <option selected='selected' value="0">No</option>
+                                        <option value="1">Yes - Push</option>
+                                        <option value="2">Yes - Email</option>
+                                    </select></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <h5 class="m-t-10">Webinar Content</h5>
+
+                    <div class="form-group-attached" >
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label class="control-label" for="agenda">Agenda</label>
+                                    <textarea class="form-control"  id="agenda" formControlName="agenda" >Agenda Body</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <br>
+        </div>
+</div>
+
+
+<h5 class="card-title">Groups Assigned</h5>
+
+<div class="card mb-3">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-12">
+          <basket-selector #groupBasketSelector shelfTitle="Available Groups" basketTitle="Selected Groups" dataBranchField="subGroups" displayField="name" (isDirty)="basketSelectorIsDirtyEventHandler($event)"></basket-selector>
+        </div>
+      </div>
+
+      <div class="row pull-right">
+        <button type="submit" class="btn btn-primary" [disabled]="!webinarForm.valid" (click)="cmdSave()">Save</button>&nbsp;
+        <button type="button" class="btn btn-default" (click)="cmdCancel()">Cancel</button>
+    </div>
+
+    </div>
+</div>
+
+    <!-- END card -->

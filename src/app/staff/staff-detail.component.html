@@ -1,0 +1,188 @@
+<div class="row" style="margin-bottom: 20px">
+  <div class="col-md-6">
+    <h2>{{user.firstName}} {{user.lastName}}  <span class="label label-success">Current</span> </h2>
+
+  </div>
+    <div class="col-md-6">
+        <button type="submit" style="margin:10px" class="btn btn-primary pull-right" (click) = "cmdMoveEditStaffpage()">Edit Staff Member</button>
+
+    </div>
+ 
+</div>
+
+<div class="card card-transparent ">
+    <pg-tabset tabAnimation="slide-left" Type="fillup" extraTabContentClass="bg-white">
+        <pg-tab>
+          <ng-template #TabHeading>
+              <span>Staff Details</span>
+          </ng-template>
+          <div class="row column-seperation">
+              <div class="card">
+                  <div class="card-block">
+                    <div class="card-body">
+                        <div class="row row-bordered">
+                            <div class="col-md-3">
+                                <p><b>Username</b></p>
+                            </div>
+                            <div class="col-md-9">
+                                <p> {{user.username}}</p>
+                            </div>
+                        </div>
+                        <div class="row row-bordered">
+                        <div class="col-md-3">
+                          <p><b>Email</b></p>
+                        </div>
+                        <div class="col-md-9">
+                          <p> {{user.email}}</p>
+                        </div>
+                      </div>
+                
+                      <div class="row row-bordered">
+                        <div class="col-md-3">
+                          <p><b>Mobile Phone</b></p>
+                        </div>
+                        <div class="col-md-9">
+                          <p>{{user.phone}}</p>
+                        </div>
+                      </div>
+                
+                      <div class="row row-bordered">
+                        <div class="col-md-3">
+                          <p><b>Employee ID</b></p>
+                        </div>
+                        <div class="col-md-9">
+                          <p> 1234156</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </pg-tab>
+        <pg-tab>
+          <ng-template #TabHeading>
+            <span>Current Courses</span>
+          </ng-template>
+          <div class="row">
+              <div class="card">
+                  <div class="card-block">
+                
+                    <div class="card-body">
+                      <table class="table table-striped">
+                        <thead>
+                        <th>Course Name</th>
+                        <th>Due by</th>
+                        <th>Progress</th>
+                        <th>Action</th>
+                        </thead>
+
+                        <tr *ngFor="let course of assignedCourses" >
+                          <td><b> {{ course.courseName}}</b></td>
+                          <td> {{ course.dueDate }} </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar progress-bar-success" [style.width.%]="course.courseSession?course.courseSession.courseProgress : 0"></div>
+                              </div>
+                            </td>
+                           <!--  <td><button type="button" class="btn btn-success btn-rounded btn-sm" (click) = "cmdMoveCourseDetailPage(course.course)">View</button></td> -->
+                           <td>
+                              <button type="button" class="btn btn-default btn-sm" (click)="cmdMoveCourseEditAssigment($event, course)">Edit</button>
+                           </td>    
+                         </tr>
+              
+                      </table>
+                     <button type="button" style="margin:10px;" class="btn btn-primary btn-sm pull-right" (click)="cmdMoveCourseAssignmentPage()">Add Course Assignment</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </pg-tab>
+
+        <pg-tab>
+            <ng-template #TabHeading>
+              <span>Groups</span>
+            </ng-template>
+            <div class="row">
+                <div class="card">
+                    <div class="card-block">
+                  
+                      <div class="card-body">
+                        <table class="table table-striped">
+                          <thead>
+                          <th>Group Name</th>
+                          <th>Action</th>
+                          </thead>
+                          <tr *ngFor="let group of userGroups">
+                            <td><b>{{group.group.name}} </b></td>
+                            <td><button type="button" class="btn btn-danger btn-sm" (click)="cmdRemoveAssignedGroupConfirmAlert(group)">Remove</button></td>
+                          </tr>
+                        </table>
+                        <button type="button" style="margin:10px" class="btn btn-primary btn-sm pull-right" (click)="cmdMoveAssignGroupPage()">Assign to Group</button>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </pg-tab>
+
+        <pg-tab>
+            <ng-template #TabHeading>
+              <span>Results</span>
+            </ng-template>
+            <div class="row">
+                <div class="card">
+                    <div class="card-block">
+                  
+                      <div class="card-body">
+                        <table class="table table-striped">
+                          <thead>
+                          <th>Course</th>
+                          <th>Assigned by</th>
+                          <th>Completed Date</th>
+                          <th>Action</th>
+                          </thead>
+                          <tr *ngFor="let item of trainingHistoryList">
+                            <td><b>{{item.course}}</b></td>
+                            <td></td>
+                            <td>{{item.completionDate}} </td>
+                            <td><button type="button" class="btn btn-success btn-sm" (click)="cmdViewCompletedCourse(item)">View</button></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </pg-tab>
+
+      </pg-tabset>
+</div>
+
+
+<br><br>
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog modal-{{slideUp.type}}">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+          <div class="modal-header clearfix text-left">
+              <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+              </button>
+              <h5>Remove Group</h5>
+            </div>
+            <div class="modal-body">
+              <p>{{removeConfirmMsg}}</p>
+               <div>
+                 <ul>
+                   <li *ngFor="let item of coursesAssingedGroupLists"> {{item.courseName}}</li>
+                 </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary btn-cons  pull-left inline" (click)="cmdRemoveGroup()">Continue</button>
+              <button type="button" class="btn btn-default btn-cons no-margin pull-left inline" (click)="mdSlideUp.hide()">Cancel</button>
+            </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
+<button type="button" class="btn btn-secondary" [routerLink]="['/staff']">Back</button>

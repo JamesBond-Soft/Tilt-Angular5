@@ -1,0 +1,64 @@
+<div class="card">
+  <h4 class="card-title">Moodle Import</h4>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <h4>Introduction</h4>
+        <div>
+          <p>TILT Suite provides the ability to import Moodle Courses from Moodle Backup Files.</p>
+          <p>The import extracts course information from the backup file and creates a new course, with associated modules, pages and quizes. Please refer to Moodle documentation on how to generate backup files.</p>
+          <div class="alert alert-warning">Please note that the importer does not import any user data, course revisions, settings or preferences relating to a course. In addition, the importer does not store any external assets referenced by a Moodle Course such as YouTube videos. These assets will be referenced as external assets in the newly generated TILT Suite Course.</div>
+          <div class="embed-responsive embed-responsive-16by9" *ngIf="false">
+            <iframe src="https://www.youtube-nocookie.com/embed/cosVBV96E2g?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <div class="embed-responsive embed-responsive-16by9" *ngIf="false">
+          <object class="embed-responsive-item" data="https://s3-ap-southeast-2.amazonaws.com/tilt-test/ExplodedView.pdf" width="100%" height="100%" type='application/pdf'>
+            <p>Sorry, the PDF couldn't be displayed :(</p>
+            <a href="https://s3-ap-southeast-2.amazonaws.com/tilt-test/ExplodedView.pdf" target="_blank">Click Here</a>
+          </object>
+          
+        </div>
+        </div>
+        <button type="button" class="btn btn-primary  " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+          aria-controls="collapseExample" (click)="cmdNextSection()" [hidden]="visibleSectionIndex > 0">Next</button>
+      </div>
+    </div>
+    <div class="row" [hidden]="visibleSectionIndex < 1">
+      <div class="col-12">
+        <backup-upload (onFinishUploadEvent)="onFinishUploadEventHandler($event)"></backup-upload>
+      </div>
+    </div>
+    <div #summarySection class="row" *ngIf="moodleImportSummary" [hidden]="visibleSectionIndex < 2">
+      <div class="col-12">
+        <backup-summary [moodleImportSummary]="moodleImportSummary"></backup-summary>
+        <button type="button" class="btn btn-primary  " (click)="cmdNextSection()" [hidden]="visibleSectionIndex > 2">Next</button>
+      </div>
+    </div>
+    <div class="row" [hidden]="visibleSectionIndex < 3">
+      <div class="col-12">
+        <import-course-config #importCourseConfig [moodleImportSummary]="moodleImportSummary"></import-course-config>
+        <button type="button" class="btn btn-primary  " (click)="cmdImportCourse()" [hidden]="visibleSectionIndex > 3 || importing" [disabled]="!importCourseConfigRef.courseForm.valid">Import</button>
+        <div *ngIf="importing">
+          Importing...
+          <div class="progress progress-small m-b-0" >
+            <div class="progress-bar progress-bar-primary" style="width:100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" [hidden]="visibleSectionIndex < 4">
+      <div class="col-12">
+          Import Summary
+          <div class="card">
+            <div class="card-body">
+              <div class="alert alert-success" *ngIf="importResultStatus === 0">Success - The Moodle Course has been imported.</div>
+              <div class="alert alert-danger" *ngIf="importResultStatus === 1">Import failure message</div>
+              <div class="alert alert-warning" *ngIf="importResultStatus === 2">Import warning message</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary  " (click)="cmdResetImport()" [hidden]="visibleSectionIndex > 4">Import Another Course</button>
+          <button type="button" class="btn btn-primary  " (click)="cmdManageCourse()" [hidden]="visibleSectionIndex > 4">Manage Course</button>
+      </div>
+    </div>
+  </div>
+</div>

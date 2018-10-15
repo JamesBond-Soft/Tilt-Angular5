@@ -1,0 +1,47 @@
+[
+        {
+            "groupId": 1,
+            "name": "Department A",
+            "subGroups": [
+                {
+                    "groupId": 2,
+                    "name": "Marketing",
+                    "subGroups": [
+                        {
+                            "groupId": 5,
+                            "name": "Team A",
+                            "subGroups": []
+                        },
+                        {
+                            "groupId": 6,
+                            "name": "Team B",
+                            "subGroups": [],
+                            "selected": true
+                        },
+                        {
+                            "groupId": 7,
+                            "name": "Team C",
+                            "subGroups": []
+                        }
+                    ]
+                },
+                {
+                    "groupId": 9,
+                    "name": "Team D",
+                    "subGroups": []
+                }
+                
+            ],
+            "selected": true
+        },
+        {
+            "groupId": 3,
+            "name": "Copyright",
+            "subGroups": []
+        },
+        {
+            "groupId": 4,
+            "name": "Printing",
+            "subGroups": []
+        }
+    ]
